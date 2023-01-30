@@ -96,7 +96,7 @@
            05 ws-product-class         pic x(13).
            05 filler                   pic x(3) value spaces.
            05 ws-trans-percent         pic z9.9.
-           05 filler                   pic xxx value " % ".
+           05 filler                   pic x value "%".
            05 ws-trans-charge          pic z,zzz,zz9.99.
       *
        01 ws-math-store.
