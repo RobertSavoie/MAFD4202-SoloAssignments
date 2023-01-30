@@ -1,7 +1,7 @@
        identification division.
        program-id. A2_ItemList.
        author. Rob Savoie.
-       date-written. Jan 29/2023.
+       date-written. Jan 30/2023.
       *
        environment division.
        configuration section.
@@ -37,68 +37,99 @@
       *
        fd output-file
            data record is output-line
-           record contains 145 characters.
+           record contains 108 characters.
       *
-       01 output-line                  pic x(145) value spaces.
+       01 output-line                  pic x(108) value spaces.
       *
        working-storage section.
+      *
+       01 ws-name.
+           05 filler                   pic x(94).
+           05 filler                   pic x(14) value "ROB SAVOIE, A2".
+      *
+       01 ws-heading-one.
+           05 filler                   pic x value spaces.
+           05 ws-head-one              pic x(4) value "ITEM".
+           05 filler                   pic x(5) value spaces.
+           05 ws-head-two              pic x(4) value "ITEM".
+           05 filler                   pic x(6) value spaces.
+           05 ws-head-three            pic xxx value "QTY".
+           05 filler                   pic x(5) value spaces.
+           05 ws-head-four             pic x(4) value "UNIT".
+           05 filler                   pic x(7) value spaces.
+           05 ws-head-five             pic x(8) value "EXTENDED".
+           05 filler                   pic x(7) value spaces.
+           05 ws-head-six              pic x(8) value "DISCOUNT".
+           05 filler                   pic x(6) value spaces.
+           05 ws-head-seven            pic x(9) value "NET PRICE".
+           05 filler                   pic xx value spaces.
+           05 ws-head-eight            pic x(5) value "CLASS".
+           05 filler                   pic xx value spaces.
+           05 ws-head-nine             pic x(5) value "TRANS".
+           05 filler                   pic xxx value spaces.
+           05 ws-head-ten              pic x(14) value "TRANSPORTATION".
+      *
+       01 ws-heading-two.
+           05 filler                   pic xx value spaces.
+           05 ws-head-one              pic x value "#".
+           05 filler                   pic x(4) value spaces.
+           05 ws-head-two              pic x(11) value "DESCRIPTION".
+           05 filler                   pic x(10) value spaces.
+           05 ws-head-four             pic x(5) value "PRICE".
+           05 filler                   pic x(7) value spaces.
+           05 ws-head-five             pic x(5) value "PRICE".
+           05 filler                   pic x(10) value spaces.
+           05 ws-head-six              pic x(6) value "AMOUNT".
+           05 filler                   pic x(26) value spaces.
+           05 ws-head-nine             pic x value "%".
+           05 filler                   pic x(10) value spaces.
+           05 ws-head-ten              pic x(6) value "CHARGE".
+           05 filler                   pic x(4) value spaces.
+      *
+       01 ws-general.
+           05 filler                   pic x.
+           05 ws-item-number           pic x(4).
+           05 filler                   pic x value spaces.
+           05 ws-desc                  pic x(13).
+           05 filler                   pic x value spaces.
+           05 ws-qty                   pic zz9.
+           05 filler                   pic xx value spaces.
+           05 ws-price-per-unit        pic z,zz9.99.
+           05 filler                   pic x(4) value spaces.
+           05 ws-ext-price             pic zzz,zz9.99.
+           05 filler                   pic x(7) value spaces.
+           05 ws-discount-amount       pic z,zz9.99.
+           05 filler                   pic x(5) value spaces.
+           05 ws-net-price             pic zzz,zz9.99.
+           05 filler                   pic x(4) value spaces.
+           05 ws-product-class         pic x.
+           05 filler                   pic x(4) value spaces.
+           05 ws-trans-percent         pic z9.9.
+           05 ws-percent               pic x.
+           05 filler                   pic x(9) value spaces.
+           05 ws-trans-charge          pic z,zz9.99.
+      *
+       01 ws-totals.
+           05 filler                   pic x(33) value spaces.
+           05 ws-ext-total             pic $zz,zzz,zz9.99.
+           05 filler                   pic x(16) value spaces.
+           05 ws-net-total             pic $zz,zzz,zz9.99.
+           05 filler                   pic x(17) value spaces.
+           05 ws-trans-total           pic $zz,zzz,zz9.99.
+      *
+       01 ws-discount-analysis.
+           05 filler                   pic z(25) value
+                                       "ITEMS WITHOUT DISCOUNT =".
+           05 filler                   pic x value spaces.
+           05 ws-without-discount      pic zz9.99.
+           05 filler                   pic x value "%".
+           05 filler                   pic x(75).
       *
        01 ws-flags.
            05 ws-eof-flag              pic x value "n".
            05 ws-eof-yes               pic x value "y".
            05 ws-eof-no                pic x value "n".
            05 ws-eof-other             pic x value "x".
-      *
-       01 ws-name.
-           05 filler                   pic x(131).
-           05 filler                   pic x(14) value "ROB SAVOIE, A2".
-      *
-       01 ws-heading.
-           05 ws-head-one              pic x(6) value "ITEM #".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-two              pic x(11) value "DESCRIPTION".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-three            pic xxx value "QTY".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-four             pic x(10) value "UNIT PRICE".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-five             pic x(14) value "EXTENDED PRICE".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-six              pic x(15) value
-                                       "DISCOUNT AMOUNT".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-seven            pic x(9) value "NET PRICE".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-eight            pic x(13) value "PRODUCT CLASS".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-nine             pic x(7) value
-                                       "TRANS %".
-           05 filler                   pic x(5) value "  |  ".
-           05 ws-head-ten              pic x(12) value
-                                       "TRANS CHARGE".
-      *
-       01 ws-general.
-           05 filler                   pic x.
-           05 ws-item-number           pic x(5).
-           05 filler                   pic x(5) value spaces.
-           05 ws-desc                  pic x(11).
-           05 filler                   pic x(5) value spaces.
-           05 ws-qty                   pic zzz.
-           05 filler                   pic x(3) value spaces.
-           05 ws-price-per-unit        pic z,zzz,zz9.99.
-           05 filler                   pic x(7) value spaces.
-           05 ws-ext-price             pic z,zzz,zz9.99.
-           05 filler                   pic x(8) value spaces.
-           05 ws-discount-amount       pic z,zzz,zz9.99.
-           05 filler                   pic x(2) value spaces.
-           05 ws-net-price             pic z,zzz,zz9.99.
-           05 filler                   pic x(11) value spaces.
-           05 ws-product-class         pic x.
-           05 filler                   pic x(13) value spaces.
-           05 ws-trans-percent         pic z9.9.
-           05 ws-percent               pic x.
-           05 filler                   pic x(5) value spaces.
-           05 ws-trans-charge          pic z,zzz,zz9.99.
       *
        01 ws-math-store.
            05 ws-store-ext             pic 9(10).
@@ -108,23 +139,10 @@
            05 ws-ext-total-store       pic 9(10)v99.
            05 ws-net-total-store       pic 9(10)v99.
            05 ws-trans-total-store     pic 9(10)v99.
-           05 ws-disc-total-store      pic 9(10).
-           05 ws-nodisc-total-store    pic 9(10).
-           05 ws-without-store         pic 999v99.
-      *
-       01 ws-totals.
-           05 filler                   pic x(50) value spaces.
-           05 ws-ext-total             pic zzz,zzz,zz9.99.
-           05 filler                   pic x(20) value spaces.
-           05 ws-net-total             pic zzz,zzz,zz9.99.
-           05 filler                   pic x(33) value spaces.
-           05 ws-trans-total           pic zzz,zzz,zz9.99.
-      *
-       01 ws-discount-analysis.
-           05 filler                   pic z(25) value
-                                       "ITEMS WITHOUT DISCOUNT = ".
-           05 ws-without-discount      pic z9.99.
-           05 filler                   pic x(115).
+           05 ws-alldisc-store         pic 9(4).
+           05 ws-disc-total-store      pic 9(4).
+           05 ws-nodisc-total-store    pic 9(4).
+           05 ws-without-store         pic 999v99999.
       *
        01 ws-cnsts.
            05 ws-transport-A           pic 99v9 value 12.5.
@@ -146,39 +164,35 @@
       *
        000-main.
       *
+      *read input file
+      *
            open input input-file.
            open output output-file.
-      *
-           write output-line from ws-name.
-           write output-line from ws-heading
-               before advancing 3 lines.
       *
            read input-file
                at end
                    move ws-eof-yes   to ws-eof-flag.
       *
-           perform 100-process-file
+           perform 100-print-headings.
+      *
+           perform 200-process-file
                until ws-eof-flag equals ws-eof-yes.
       *
-           divide ws-nodisc-total-store
-               by ws-disc-total-store
-           giving ws-without-store.
+           perform 300-calculations.
       *
-           multiply ws-without-store
-                 by 100
-             giving ws-without-discount.
-      *    
-           move ws-ext-total-store   to ws-ext-total.
-           move ws-net-total-store   to ws-net-total.
-           move ws-trans-total-store to ws-trans-total.
+           perform 400-write-footers.
       *
-           write output-line from ws-totals
-               after advancing 1 lines.
-           write output-line from ws-discount-analysis
-               after advancing 3 lines.
            goback.
+       100-print-headings.
       *
-       100-process-file.
+      *display the name and heading
+      *
+           write output-line from ws-name
+             before advancing 3 lines.
+           write output-line from ws-heading-one.
+           write output-line from ws-heading-two
+             before advancing 3 lines.
+       200-process-file.
       *
       *clear output buffer
       *
@@ -206,36 +220,44 @@
                multiply ws-store-ext
                  by     ws-discount
                  giving ws-store-discount
-
+      *
                add il-qty
                 to ws-disc-total-store
+            giving ws-disc-total-store
+      *
            else if (ws-store-ext is greater than 50 and ws-product-class
            is equal to ws-class-F) then
                multiply ws-store-ext
                      by ws-discount
                  giving ws-store-discount
-
+      *
                add il-qty
                 to ws-disc-total-store
+            giving ws-disc-total-store
+      *
            else if (ws-product-class is equal to ws-class-B and il-qty 
            is greater than 5) then
                multiply ws-store-ext
                      by ws-discount
                  giving ws-store-discount
-
+      *
                add il-qty
                 to ws-disc-total-store
+            giving ws-disc-total-store
+      *
            else 
                move 0.0 to ws-store-discount
-
+      *
                add il-qty
                 to ws-nodisc-total-store
+            giving ws-nodisc-total-store
+      *
            end-if.
       *
       *calculate transportation charge
       *
-           if (ws-product-class is equal to ws-class-A) then
-                     move ws-transport-A to ws-trans-percent
+           if (ws-product-class      is equal to ws-class-A) then
+                          move ws-transport-A to ws-trans-percent
                multiply ws-percent-A
                      by ws-store-ext
                  giving ws-store-trans
@@ -280,6 +302,7 @@
            move ws-store-discount  to ws-discount-amount.
            move ws-store-ext       to ws-ext-price.
            move ws-store-net       to ws-net-price.
+      *
       *write detail output
       *
            write output-line from ws-general
@@ -290,5 +313,36 @@
            read input-file
                at end
                    move ws-eof-yes to ws-eof-flag.
+      *
+       300-calculations.
+      *    
+      *do math for percentage
+      *
+                add ws-nodisc-total-store
+                 to ws-disc-total-store
+             giving ws-alldisc-store.
+      *
+             divide ws-nodisc-total-store
+                 by ws-alldisc-store
+             giving ws-without-store.
+      *
+           multiply ws-without-store
+                 by 100
+             giving ws-without-discount.
+      *
+      *move totals to output
+      *
+           move ws-ext-total-store to ws-ext-total.
+           move ws-net-total-store to ws-net-total.
+           move ws-trans-total-store to ws-trans-total.
+      *
+       400-write-footers.
+      *          
+      *write final lines
+      *
+           write output-line from ws-totals
+             after advancing 1 lines.
+           write output-line from ws-discount-analysis
+             after advancing 3 lines.
       *
        end program A2_ItemList.
