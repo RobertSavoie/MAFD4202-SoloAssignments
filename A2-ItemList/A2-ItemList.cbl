@@ -37,9 +37,9 @@
       *
        fd output-file
            data record is output-line
-           record contains 149 characters.
+           record contains 145 characters.
       *
-       01 output-line                  pic x(149) value spaces.
+       01 output-line                  pic x(145) value spaces.
       *
        working-storage section.
       *
@@ -124,6 +124,7 @@
            05 filler                   pic z(25) value
                                        "ITEMS WITHOUT DISCOUNT = ".
            05 ws-without-discount      pic z9.99.
+           05 filler                   pic x(115).
       *
        01 ws-cnsts.
            05 ws-transport-A           pic 99v9 value 12.5.
