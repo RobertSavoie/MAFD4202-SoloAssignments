@@ -8,7 +8,7 @@ ITEM #  |  DESCRIPTION  |  QTY  |  UNIT PRICE  |  EXTENDED PRICE  |  DISCOUNT AM
 
  1742      HANDLE           20          10.00             200.00               10.00        210.00           A             12.5%            25.00
 
- 2149      USB DRIVE       150       1,200.00         180,000.00                0.00    180,000.00           C              0.0%            45.00
+ 2149      USB DRIVE       150       1,200.00         180,000.00                0.00    180,000.00           C              0.0%            25.00
 
  3761      TAPE              5       5,000.00          25,000.00                0.00     25,000.00           D              6.5%         1,625.00
 
@@ -20,7 +20,7 @@ ITEM #  |  DESCRIPTION  |  QTY  |  UNIT PRICE  |  EXTENDED PRICE  |  DISCOUNT AM
 
  3002      PENCILS          99           0.09               8.00                0.00          8.00           F              4.5%             0.36
 
- 4001      CANADIAN RU     184         150.29          27,653.00                0.00     27,653.00           D              0.0%            45.00
+ 4001      CANADIAN RU     184         150.29          27,653.00                0.00     27,653.00           D              0.0%             0.36
 
  4003      CARPET           50          40.00           2,000.00                0.00      2,000.00           Z              6.5%           130.00
 
@@ -30,7 +30,7 @@ ITEM #  |  DESCRIPTION  |  QTY  |  UNIT PRICE  |  EXTENDED PRICE  |  DISCOUNT AM
 
  5003      PENS (GOLD)      10          49.99             499.00               24.00        523.00           B              8.5%            42.41
 
- 5004      PENS (BLACK     400           2.00             800.00                0.00        800.00           D              0.0%            45.00
+ 5004      PENS (BLACK     400           2.00             800.00                0.00        800.00           D              0.0%            42.41
 
  8888      HIGH CHAIR      999       9,999.99       9,989,990.00          499,499.00    489,489.00           A             12.5%     1,248,748.75
 
@@ -40,3 +40,8 @@ ITEM #  |  DESCRIPTION  |  QTY  |  UNIT PRICE  |  EXTENDED PRICE  |  DISCOUNT AM
 
  9999      LAST RECORD     999           0.01               9.00                0.00          9.00           A             12.5%             1.12
 
+
+                                                   10,351,711.00                     10,857,514.00                                   1,260,910.37
+
+
+ITEMS WITHOUT DISCOUNT =  3.00

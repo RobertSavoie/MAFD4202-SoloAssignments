@@ -102,15 +102,28 @@
       *
        01 ws-math-store.
            05 ws-store-ext             pic 9(10).
-           05 ws-store-trans           pic 9(10)v9999.
+           05 ws-store-trans           pic 9(10)v99.
            05 ws-store-discount        pic 9(10).
            05 ws-store-net             pic 9(10).
+           05 ws-ext-total-store       pic 9(10)v99.
+           05 ws-net-total-store       pic 9(10)v99.
+           05 ws-trans-total-store     pic 9(10)v99.
+           05 ws-disc-total-store      pic 9(10).
+           05 ws-nodisc-total-store    pic 9(10).
+           05 ws-without-store         pic 999v99.
       *
-       01 ws-summary.
-           05 filler                   pic xxx value spaces.
+       01 ws-totals.
+           05 filler                   pic x(50) value spaces.
+           05 ws-ext-total             pic zzz,zzz,zz9.99.
+           05 filler                   pic x(20) value spaces.
+           05 ws-net-total             pic zzz,zzz,zz9.99.
+           05 filler                   pic x(33) value spaces.
+           05 ws-trans-total           pic zzz,zzz,zz9.99.
       *
        01 ws-discount-analysis.
-           05 filler                   pic xxx value spaces.
+           05 filler                   pic z(25) value
+                                       "ITEMS WITHOUT DISCOUNT = ".
+           05 ws-without-discount      pic z9.99.
       *
        01 ws-cnsts.
            05 ws-transport-A           pic 99v9 value 12.5.
@@ -127,7 +140,6 @@
            05 ws-percent-F             pic 9v999 value 0.045.
            05 ws-percent-default       pic 9v999 value 0.065.
            05 ws-percent-symbol        pic x value "%".
-
       *
        procedure division.
       *
@@ -142,11 +154,27 @@
       *
            read input-file
                at end
-                   move ws-eof-yes to ws-eof-flag.
+                   move ws-eof-yes   to ws-eof-flag.
       *
            perform 100-process-file
                until ws-eof-flag equals ws-eof-yes.
       *
+           divide ws-nodisc-total-store
+               by ws-disc-total-store
+           giving ws-without-store.
+      *
+           multiply ws-without-store
+                 by 100
+             giving ws-without-discount.
+      *    
+           move ws-ext-total-store   to ws-ext-total.
+           move ws-net-total-store   to ws-net-total.
+           move ws-trans-total-store to ws-trans-total.
+      *
+           write output-line from ws-totals
+               after advancing 1 lines.
+           write output-line from ws-discount-analysis
+               after advancing 3 lines.
            goback.
       *
        100-process-file.
@@ -177,18 +205,30 @@
                multiply ws-store-ext
                  by     ws-discount
                  giving ws-store-discount
+
+               add il-qty
+                to ws-disc-total-store
            else if (ws-store-ext is greater than 50 and ws-product-class
            is equal to ws-class-F) then
                multiply ws-store-ext
                      by ws-discount
                  giving ws-store-discount
+
+               add il-qty
+                to ws-disc-total-store
            else if (ws-product-class is equal to ws-class-B and il-qty 
            is greater than 5) then
                multiply ws-store-ext
                      by ws-discount
                  giving ws-store-discount
+
+               add il-qty
+                to ws-disc-total-store
            else 
                move 0.0 to ws-store-discount
+
+               add il-qty
+                to ws-nodisc-total-store
            end-if.
       *
       *calculate transportation charge
@@ -197,35 +237,45 @@
                      move ws-transport-A to ws-trans-percent
                multiply ws-percent-A
                      by ws-store-ext
-                 giving ws-trans-charge
+                 giving ws-store-trans
       *
            else if (ws-product-class is equal to ws-class-B) then
                           move ws-transport-B to ws-trans-percent
                multiply ws-percent-B
                      by ws-store-ext
-                 giving ws-trans-charge
+                 giving ws-store-trans
       *
            else if (ws-product-class is equal to ws-class-F) then
                           move ws-transport-F to ws-trans-percent
                multiply ws-percent-F
                      by ws-store-ext
-                 giving ws-trans-charge
+                 giving ws-store-trans
       *
            else if (ws-qty is less than or equal to 100) then
                        move ws-transport-default to ws-trans-percent
                multiply ws-percent-default
                      by ws-store-ext
-                 giving ws-trans-charge
+                 giving ws-store-trans
       *
            else
                move 0.0            to ws-trans-percent
                move ws-trans-cost  to ws-trans-charge
            end-if.
-      *    
+      *
               add ws-store-discount
                to ws-store-ext
            giving ws-store-net.
+
+              add ws-store-ext
+               to ws-ext-total-store.
+
+              add ws-store-net
+               to ws-net-total-store.
+
+              add ws-store-trans
+               to ws-trans-total-store.
       *
+           move ws-store-trans     to ws-trans-charge.
            move ws-store-discount  to ws-discount-amount.
            move ws-store-ext       to ws-ext-price.
            move ws-store-net       to ws-net-price.
