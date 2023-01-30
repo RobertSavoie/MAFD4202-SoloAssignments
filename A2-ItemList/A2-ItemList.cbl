@@ -37,9 +37,9 @@
       *
        fd output-file
            data record is output-line
-           record contains 175 characters.
+           record contains 172 characters.
       *
-       01 output-line                  pic x(175) value spaces.
+       01 output-line                  pic x(172) value spaces.
       *
        working-storage section.
       *
@@ -97,7 +97,7 @@
            05 filler                   pic x(2) value spaces.
            05 ws-trans-percent         pic 9(16).
            05 filler                   pic x(5) value spaces.
-           05 ws--trans-charge         pic 9(21).
+           05 ws--trans-charge         pic 9(18).
       *
        01 ws-summary.
            05 filler                   pic xxx value spaces.
