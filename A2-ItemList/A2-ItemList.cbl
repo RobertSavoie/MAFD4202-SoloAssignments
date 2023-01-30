@@ -169,16 +169,14 @@
            open input input-file.
            open output output-file.
       *
-           read input-file
-               at end
-                   move ws-eof-yes   to ws-eof-flag.
+           perform 150-read-input-file.
       *
            perform 100-print-headings.
       *
            perform 200-process-file
                until ws-eof-flag equals ws-eof-yes.
       *
-           perform 300-calculations.
+           perform 350-calculate-without-discount.
       *
            perform 400-write-footers.
       *
@@ -192,6 +190,11 @@
            write output-line from ws-heading-one.
            write output-line from ws-heading-two
              before advancing 3 lines.
+      *
+       150-read-input-file.
+           read input-file
+               at end
+                   move ws-eof-yes to ws-eof-flag.
        200-process-file.
       *
       *clear output buffer
@@ -203,7 +206,6 @@
            multiply il-qty
                  by il-price-per-unit
              giving ws-store-ext.
-
       *
       *move detail output data
            move il-item-number     to ws-item-number.
@@ -213,90 +215,7 @@
            move il-product-class   to ws-product-class.
            move ws-percent-symbol  to ws-percent.
       *
-      *calculate discount
-      *
-           if (ws-store-ext is greater than 100 and ws-product-class is
-               equal to ws-class-A) then
-               multiply ws-store-ext
-                 by     ws-discount
-                 giving ws-store-discount
-      *
-               add il-qty
-                to ws-disc-total-store
-            giving ws-disc-total-store
-      *
-           else if (ws-store-ext is greater than 50 and ws-product-class
-           is equal to ws-class-F) then
-               multiply ws-store-ext
-                     by ws-discount
-                 giving ws-store-discount
-      *
-               add il-qty
-                to ws-disc-total-store
-            giving ws-disc-total-store
-      *
-           else if (ws-product-class is equal to ws-class-B and il-qty 
-           is greater than 5) then
-               multiply ws-store-ext
-                     by ws-discount
-                 giving ws-store-discount
-      *
-               add il-qty
-                to ws-disc-total-store
-            giving ws-disc-total-store
-      *
-           else 
-               move 0.0 to ws-store-discount
-      *
-               add il-qty
-                to ws-nodisc-total-store
-            giving ws-nodisc-total-store
-      *
-           end-if.
-      *
-      *calculate transportation charge
-      *
-           if (ws-product-class      is equal to ws-class-A) then
-                          move ws-transport-A to ws-trans-percent
-               multiply ws-percent-A
-                     by ws-store-ext
-                 giving ws-store-trans
-      *
-           else if (ws-product-class is equal to ws-class-B) then
-                          move ws-transport-B to ws-trans-percent
-               multiply ws-percent-B
-                     by ws-store-ext
-                 giving ws-store-trans
-      *
-           else if (ws-product-class is equal to ws-class-F) then
-                          move ws-transport-F to ws-trans-percent
-               multiply ws-percent-F
-                     by ws-store-ext
-                 giving ws-store-trans
-      *
-           else if (ws-qty is less than or equal to 100) then
-                       move ws-transport-default to ws-trans-percent
-               multiply ws-percent-default
-                     by ws-store-ext
-                 giving ws-store-trans
-      *
-           else
-               move 0.0            to ws-trans-percent
-               move ws-trans-cost  to ws-trans-charge
-           end-if.
-      *
-              add ws-store-discount
-               to ws-store-ext
-           giving ws-store-net.
-
-              add ws-store-ext
-               to ws-ext-total-store.
-
-              add ws-store-net
-               to ws-net-total-store.
-
-              add ws-store-trans
-               to ws-trans-total-store.
+           perform 300-calculate-detail-line.
       *
            move ws-store-trans     to ws-trans-charge.
            move ws-store-discount  to ws-discount-amount.
@@ -310,11 +229,96 @@
       *
       *read next record from input-file
       *
-           read input-file
-               at end
-                   move ws-eof-yes to ws-eof-flag.
+           perform 150-read-input-file.
       *
-       300-calculations.
+       300-calculate-detail-line.
+      *    
+      *calculate discount
+      *
+           if (ws-store-ext is greater than 100 and ws-product-class is
+                                           equal to ws-class-A) then
+               multiply ws-store-ext
+                     by ws-discount
+                 giving ws-store-discount
+      *
+               add il-qty
+                to ws-disc-total-store
+            giving ws-disc-total-store
+      *
+           else if (ws-store-ext is greater than 50 and ws-product-class
+                                        is equal to ws-class-F) then
+                   multiply ws-store-ext
+                         by ws-discount
+                     giving ws-store-discount
+      *
+                   add il-qty
+                    to ws-disc-total-store
+                giving ws-disc-total-store
+      *
+               else if (ws-product-class is equal to ws-class-B and
+                                      il-qty is greater than 5) then
+                       multiply ws-store-ext
+                             by ws-discount
+                         giving ws-store-discount
+      *
+                       add il-qty
+                        to ws-disc-total-store
+                    giving ws-disc-total-store
+      *
+                   else
+                       move 0.0 to ws-store-discount
+      *
+                       add il-qty
+                        to ws-nodisc-total-store
+                    giving ws-nodisc-total-store
+      *
+                   end-if.
+      *
+      *calculate transportation charge
+      *
+           if (ws-product-class is equal to ws-class-A) then
+               move ws-transport-A to ws-trans-percent
+               multiply ws-percent-A
+                     by ws-store-ext
+                 giving ws-store-trans
+      *
+           else if (ws-product-class is equal to ws-class-B) then
+                   move ws-transport-B to ws-trans-percent
+                   multiply ws-percent-B
+                         by ws-store-ext
+                     giving ws-store-trans
+      *
+               else if (ws-product-class is equal to ws-class-F) then
+                       move ws-transport-F to ws-trans-percent
+                       multiply ws-percent-F
+                             by ws-store-ext
+                         giving ws-store-trans
+      *
+                   else if (ws-qty is less than or equal to 100) then
+                           move ws-transport-default to ws-trans-percent
+                           multiply ws-percent-default
+                                 by ws-store-ext
+                             giving ws-store-trans
+      *
+                       else
+                           move 0.0 to ws-trans-percent
+                           move ws-trans-cost to ws-trans-charge
+                       end-if.
+      *
+           add ws-store-discount
+             to ws-store-ext
+             giving ws-store-net.
+      *
+           add ws-store-ext
+             to ws-ext-total-store.
+      *
+           add ws-store-net
+             to ws-net-total-store.
+      *
+           add ws-store-trans
+             to ws-trans-total-store.
+      *
+       350-calculate-without-discount.
       *    
       *do math for percentage
       *
