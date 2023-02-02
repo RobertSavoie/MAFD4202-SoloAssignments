@@ -1,7 +1,7 @@
        identification division.
        program-id. A2_ItemList.
        author. Rob Savoie.
-       date-written. Jan 30/2023.
+       date-written. rev: V1.0 Jan 30/2023 rev: V1.3 on Feb 2/2023.
       *
        environment division.
        configuration section.
@@ -87,7 +87,7 @@
            05 filler                   pic x(4)  value spaces.
       *
        01 ws-general.
-           05 filler                   pic x.
+           05 filler                   pic x     value spaces.
            05 ws-item-number           pic x(4).
            05 filler                   pic x     value spaces.
            05 ws-desc                  pic x(13).
@@ -106,8 +106,8 @@
            05 filler                   pic x(4)  value spaces.
            05 ws-trans-percent         pic z9.9.
            05 ws-percent               pic x.
-           05 filler                   pic x(9)  value spaces.
-           05 ws-trans-charge          pic z,zz9.99.
+           05 filler                   pic x(4)  value spaces.
+           05 ws-trans-charge          pic z,zzz,zz9.99.
       *
        01 ws-totals.
            05 filler                   pic x(33) value spaces.
@@ -132,13 +132,13 @@
            05 ws-eof-other             pic x     value "x".
       *
        01 ws-math-store.
-           05 ws-store-ext             pic 9(10).
-           05 ws-store-trans           pic 9(10)v99.
-           05 ws-store-discount        pic 9(10).
-           05 ws-store-net             pic 9(10).
-           05 ws-store-ext-total       pic 9(10)v99.
-           05 ws-store-net-total       pic 9(10)v99.
-           05 ws-store-trans-total     pic 9(10)v99.
+           05 ws-store-ext             pic 9(10)v9999.
+           05 ws-store-trans           pic 9(10)v9999.
+           05 ws-store-discount        pic 9(10)v9999.
+           05 ws-store-net             pic 9(10)v9999.
+           05 ws-store-ext-total       pic 9(10)v9999.
+           05 ws-store-net-total       pic 9(10)v9999.
+           05 ws-store-trans-total     pic 9(10)v9999.
            05 ws-store-alldisc         pic 9(4).
            05 ws-store-disc-total      pic 9(4).
            05 ws-store-nodisc-total    pic 9(4).
@@ -203,11 +203,7 @@
       *
            move spaces to ws-general.
       *
-      *extended price
-      *
-           multiply il-qty
-                 by il-price-per-unit
-             giving ws-store-ext.
+           perform 310-calculate-ext-price.
       *
       *move detail output data
            move il-item-number     to ws-item-number.
@@ -217,7 +213,9 @@
            move il-product-class   to ws-product-class.
            move ws-percent-symbol  to ws-percent.
       *
-           perform 300-calculate-detail-line.
+           perform 320-calculate-discount.
+           perform 330-calculate-trans-charge.
+           perform 340-calculate-net-price.
       *
            move ws-store-trans     to ws-trans-charge.
            move ws-store-discount  to ws-discount-amount.
@@ -233,7 +231,16 @@
       *
            perform 150-read-input-file.
       *
-       300-calculate-detail-line.
+      *
+      *calculate extended price
+      *
+       310-calculate-ext-price.
+      *
+           multiply il-qty
+                 by il-price-per-unit
+             giving ws-store-ext.
+      *
+       320-calculate-discount.
       *    
       *calculate discount
       *
@@ -271,6 +278,7 @@
                         to ws-store-nodisc-total
       *
                    end-if.
+       330-calculate-trans-charge.
       *
       *calculate transportation charge
       *
@@ -300,8 +308,9 @@
       *
                        else
                            move 0.0 to ws-trans-percent
-                           move ws-trans-cost to ws-trans-charge
+                           move ws-trans-cost to ws-store-trans
                        end-if.
+       340-calculate-net-price.
       *
       *calculate net price
       *
