@@ -169,20 +169,20 @@
            open input input-file.
            open output output-file.
       *
-           perform 150-read-input-file.
+           perform 110-read-input-file.
       *
-           perform 100-print-headings.
+           perform 100-write-headings.
       *
            perform 200-process-file
                until ws-eof-flag equals ws-eof-yes.
       *
            perform 350-calculate-without-discount.
       *
-           perform 400-write-footers.
+           perform 120-write-footers.
       *
            goback.
       *
-       100-print-headings.
+       100-write-headings.
       *
       *display the name and heading
       *
@@ -192,10 +192,19 @@
            write output-line from ws-heading-two
              before advancing 3 lines.
       *
-       150-read-input-file.
+       110-read-input-file.
            read input-file
                at end
                    move ws-eof-yes to ws-eof-flag.
+      *
+       120-write-footers.
+      *          
+      *write final lines
+      *
+           write output-line from ws-totals
+             after advancing 1 lines.
+           write output-line from ws-discount-analysis
+             after advancing 3 lines.
       *
        200-process-file.
       *
@@ -229,12 +238,11 @@
       *
       *read next record from input-file
       *
-           perform 150-read-input-file.
-      *
-      *
-      *calculate extended price
+           perform 110-read-input-file.
       *
        310-calculate-ext-price.
+      *
+      *calculate extended price
       *
            multiply il-qty
                  by il-price-per-unit
@@ -329,7 +337,7 @@
       *
        350-calculate-without-discount.
       *    
-      *do math for percentage
+      *calculate percentage of items without discount
       *
                 add ws-store-nodisc-total
                  to ws-store-disc-total
@@ -348,14 +356,5 @@
            move ws-store-ext-total to ws-ext-total.
            move ws-store-net-total to ws-net-total.
            move ws-store-trans-total to ws-trans-total.
-      *
-       400-write-footers.
-      *          
-      *write final lines
-      *
-           write output-line from ws-totals
-             after advancing 1 lines.
-           write output-line from ws-discount-analysis
-             after advancing 3 lines.
       *
        end program A2_ItemList.
