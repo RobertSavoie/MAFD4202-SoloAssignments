@@ -243,9 +243,8 @@
                 by ws-discount
             giving ws-store-discount
       *
-               add il-qty
+               add 1
                 to ws-store-disc-total
-            giving ws-store-disc-total
       *
            else if (ws-store-ext is greater than 50 and ws-product-class
                                         is equal to ws-class-F) then
@@ -253,9 +252,8 @@
                     by ws-discount
                 giving ws-store-discount
       *
-                   add il-qty
+                   add 1
                     to ws-store-disc-total
-                giving ws-store-disc-total
       *
                else if (ws-product-class is equal to ws-class-B and
                                       il-qty is greater than 5) then
@@ -263,16 +261,14 @@
                         by ws-discount
                     giving ws-store-discount
       *
-                       add il-qty
+                       add 1
                         to ws-store-disc-total
-                    giving ws-store-disc-total
       *
                    else
                        move 0.0 to ws-store-discount
       *
-                       add il-qty
+                       add 1
                         to ws-store-nodisc-total
-                    giving ws-store-nodisc-total
       *
                    end-if.
       *
