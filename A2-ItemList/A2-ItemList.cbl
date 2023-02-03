@@ -95,11 +95,11 @@
            05 ws-qty                   pic zz9.
            05 filler                   pic xx    value spaces.
            05 ws-price-per-unit        pic z,zz9.99.
-           05 filler                   pic xx  value spaces.
+           05 filler                   pic xx    value spaces.
            05 ws-ext-price             pic z,zzz,zz9.99.
            05 filler                   pic x(5)  value spaces.
            05 ws-discount-amount       pic zzz,zz9.99.
-           05 filler                   pic xxx  value spaces.
+           05 filler                   pic xxx   value spaces.
            05 ws-net-price             pic z,zzz,zz9.99.
            05 filler                   pic x(4)  value spaces.
            05 ws-product-class         pic x.
@@ -292,27 +292,27 @@
       *
            if (ws-product-class is equal to ws-class-A) then
                move ws-transport-A to ws-trans-percent
-               multiply ws-percent-A
-                     by ws-store-ext
-                 giving ws-store-trans
+           multiply ws-percent-A
+                 by ws-store-ext
+             giving ws-store-trans
       *
            else if (ws-product-class is equal to ws-class-B) then
                    move ws-transport-B to ws-trans-percent
-                   multiply ws-percent-B
-                         by ws-store-ext
-                     giving ws-store-trans
+               multiply ws-percent-B
+                     by ws-store-ext
+                 giving ws-store-trans
       *
                else if (ws-product-class is equal to ws-class-F) then
                        move ws-transport-F to ws-trans-percent
-                       multiply ws-percent-F
-                             by ws-store-ext
-                         giving ws-store-trans
+                   multiply ws-percent-F
+                         by ws-store-ext
+                     giving ws-store-trans
       *
                    else if (ws-qty is less than or equal to 100) then
                            move ws-transport-default to ws-trans-percent
-                           multiply ws-percent-default
-                                 by ws-store-ext
-                             giving ws-store-trans
+                       multiply ws-percent-default
+                             by ws-store-ext
+                         giving ws-store-trans
       *
                        else
                            move 0.0 to ws-trans-percent
@@ -326,14 +326,14 @@
                from ws-store-ext
              giving ws-store-net.
       *
-           add ws-store-ext
-            to ws-store-ext-total.
-      *
-           add ws-store-net
-            to ws-store-net-total.
-      *
-           add ws-store-trans
-            to ws-store-trans-total.
+                add ws-store-ext
+                 to ws-store-ext-total.
+      *         
+                add ws-store-net
+                 to ws-store-net-total.
+      *         
+                add ws-store-trans
+                 to ws-store-trans-total.
       *
        350-calculate-without-discount.
       *    
@@ -353,8 +353,8 @@
       *
       *move totals to output
       *
-           move ws-store-ext-total to ws-ext-total.
-           move ws-store-net-total to ws-net-total.
-           move ws-store-trans-total to ws-trans-total.
+           move ws-store-ext-total     to ws-ext-total.
+           move ws-store-net-total     to ws-net-total.
+           move ws-store-trans-total   to ws-trans-total.
       *
        end program A2_ItemList.
