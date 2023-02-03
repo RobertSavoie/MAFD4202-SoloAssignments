@@ -136,9 +136,9 @@
            05 ws-store-trans           pic 9(10)v9999.
            05 ws-store-discount        pic 9(10)v9999.
            05 ws-store-net             pic 9(10)v9999.
-           05 ws-store-ext-total       pic 9(10)v9999.
-           05 ws-store-net-total       pic 9(10)v9999.
-           05 ws-store-trans-total     pic 9(10)v9999.
+           05 ws-store-total-ext       pic 9(10)v9999.
+           05 ws-store-total-net       pic 9(10)v9999.
+           05 ws-store-total-trans     pic 9(10)v9999.
            05 ws-store-alldisc         pic 9(4).
            05 ws-store-disc-total      pic 9(4).
            05 ws-store-nodisc-total    pic 9(4).
@@ -327,13 +327,13 @@
              giving ws-store-net.
       *
                 add ws-store-ext
-                 to ws-store-ext-total.
+                 to ws-store-total-ext.
       *         
                 add ws-store-net
-                 to ws-store-net-total.
+                 to ws-store-total-net.
       *         
                 add ws-store-trans
-                 to ws-store-trans-total.
+                 to ws-store-total-trans.
       *
        350-calculate-without-discount.
       *    
@@ -353,8 +353,8 @@
       *
       *move totals to output
       *
-           move ws-store-ext-total     to ws-ext-total.
-           move ws-store-net-total     to ws-net-total.
-           move ws-store-trans-total   to ws-trans-total.
+           move ws-store-total-ext     to ws-ext-total.
+           move ws-store-total-net     to ws-net-total.
+           move ws-store-total-trans   to ws-trans-total.
       *
        end program A2_ItemList.
