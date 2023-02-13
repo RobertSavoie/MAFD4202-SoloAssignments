@@ -152,6 +152,7 @@
            05 ws-trans-cost            pic 99    value 45.
            05 ws-discount              pic 9v99  value 0.05.
            05 ws-class-A               pic x     value "A".
+           05 ws-class-B               pic x     value "B".
            05 ws-class-D               pic x     value "D".
            05 ws-class-F               pic x     value "F".
            05 ws-percent-A             pic 9v999 value 0.125.
@@ -276,7 +277,7 @@
                    add 1
                     to ws-store-disc-total
       *
-               else if (ws-product-class is equal to ws-class-D and
+               else if (ws-product-class is equal to ws-class-B and
                                       il-qty is greater than 5) then
                   multiply ws-store-ext
                         by ws-discount
