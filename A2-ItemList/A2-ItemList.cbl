@@ -103,10 +103,10 @@
            05 ws-net-price             pic z,zzz,zz9.99.
            05 filler                   pic x(4)  value spaces.
            05 ws-product-class         pic x.
-           05 filler                   pic x(4)  value spaces.
-           05 ws-trans-percent         pic z9.9.
+           05 filler                   pic x(3)  value spaces.
+           05 ws-trans-percent         pic z9.99.
            05 ws-percent               pic x.
-           05 filler                   pic x(4)  value spaces.
+           05 filler                   pic x(5)  value spaces.
            05 ws-trans-charge          pic z,zzz,zz9.99.
       *
        01 ws-totals.
@@ -146,16 +146,16 @@
       *
        01 ws-cnsts.
            05 ws-transport-A           pic 99v9  value 12.5.
-           05 ws-transport-B           pic 9v9   value 8.5.
+           05 ws-transport-D           pic 9v9   value 8.5.
            05 ws-transport-F           pic 9v9   value 4.5.
            05 ws-transport-default     pic 9v9   value 6.5.
            05 ws-trans-cost            pic 99    value 45.
            05 ws-discount              pic 9v99  value 0.05.
            05 ws-class-A               pic x     value "A".
-           05 ws-class-B               pic x     value "B".
+           05 ws-class-D               pic x     value "D".
            05 ws-class-F               pic x     value "F".
            05 ws-percent-A             pic 9v999 value 0.125.
-           05 ws-percent-B             pic 9v999 value 0.085.
+           05 ws-percent-D             pic 9v999 value 0.085.
            05 ws-percent-F             pic 9v999 value 0.045.
            05 ws-percent-default       pic 9v999 value 0.065.
            05 ws-percent-symbol        pic x     value "%".
@@ -166,8 +166,7 @@
       *
       *read input file
       *
-           open input input-file.
-           open output output-file.
+           perform 50-open-files.
       *
            perform 110-read-input-file.
       *
@@ -180,7 +179,14 @@
       *
            perform 120-write-footers.
       *
+           perform 400-close-files.
+      *
            goback.
+      *
+       50-open-files.
+      *
+           open input input-file.
+           open output output-file.
       *
        100-write-headings.
       *
@@ -270,7 +276,7 @@
                    add 1
                     to ws-store-disc-total
       *
-               else if (ws-product-class is equal to ws-class-B and
+               else if (ws-product-class is equal to ws-class-D and
                                       il-qty is greater than 5) then
                   multiply ws-store-ext
                         by ws-discount
@@ -296,9 +302,9 @@
                  by ws-store-ext
              giving ws-store-trans
       *
-           else if (ws-product-class is equal to ws-class-B) then
-                   move ws-transport-B to ws-trans-percent
-               multiply ws-percent-B
+           else if (ws-product-class is equal to ws-class-D) then
+                   move ws-transport-D to ws-trans-percent
+               multiply ws-percent-D
                      by ws-store-ext
                  giving ws-store-trans
       *
@@ -357,4 +363,9 @@
            move ws-store-total-net     to ws-net-total.
            move ws-store-total-trans   to ws-trans-total.
       *
+       400-close-files.
+      *
+           close input-file
+             output-file.
+
        end program A2_ItemList.
