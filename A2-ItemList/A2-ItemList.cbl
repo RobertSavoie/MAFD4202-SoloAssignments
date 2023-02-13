@@ -262,7 +262,7 @@
                                            equal to ws-class-A) then
           multiply ws-store-ext
                 by ws-discount
-            giving ws-store-discount
+            giving ws-store-discount rounded
       *
                add 1
                 to ws-store-disc-total
@@ -271,7 +271,7 @@
                                         is equal to ws-class-F) then
               multiply ws-store-ext
                     by ws-discount
-                giving ws-store-discount
+                giving ws-store-discount rounded
       *
                    add 1
                     to ws-store-disc-total
@@ -280,7 +280,7 @@
                                       il-qty is greater than 5) then
                   multiply ws-store-ext
                         by ws-discount
-                    giving ws-store-discount
+                    giving ws-store-discount rounded
       *
                        add 1
                         to ws-store-disc-total
@@ -300,25 +300,25 @@
                move ws-transport-A to ws-trans-percent
            multiply ws-percent-A
                  by ws-store-ext
-             giving ws-store-trans
+             giving ws-store-trans rounded
       *
            else if (ws-product-class is equal to ws-class-D) then
                    move ws-transport-D to ws-trans-percent
                multiply ws-percent-D
                      by ws-store-ext
-                 giving ws-store-trans
+                 giving ws-store-trans rounded
       *
                else if (ws-product-class is equal to ws-class-F) then
                        move ws-transport-F to ws-trans-percent
                    multiply ws-percent-F
                          by ws-store-ext
-                     giving ws-store-trans
+                     giving ws-store-trans rounded
       *
                    else if (ws-qty is less than or equal to 100) then
                            move ws-transport-default to ws-trans-percent
                        multiply ws-percent-default
                              by ws-store-ext
-                         giving ws-store-trans
+                         giving ws-store-trans rounded
       *
                        else
                            move 0.0 to ws-trans-percent
@@ -330,16 +330,16 @@
       *
            subtract ws-store-discount
                from ws-store-ext
-             giving ws-store-net.
+             giving ws-store-net rounded.
       *
                 add ws-store-ext
-                 to ws-store-total-ext.
+                 to ws-store-total-ext rounded.
       *         
                 add ws-store-net
-                 to ws-store-total-net.
+                 to ws-store-total-net rounded.
       *         
                 add ws-store-trans
-                 to ws-store-total-trans.
+                 to ws-store-total-trans rounded.
       *
        350-calculate-without-discount.
       *    
@@ -347,15 +347,15 @@
       *
                 add ws-store-nodisc-total
                  to ws-store-disc-total
-             giving ws-store-alldisc.
+             giving ws-store-alldisc rounded.
       *
              divide ws-store-nodisc-total
                  by ws-store-alldisc
-             giving ws-store-without.
+             giving ws-store-without rounded.
       *
            multiply ws-store-without
                  by 100
-             giving ws-without-discount.
+             giving ws-without-discount rounded.
       *
       *move totals to output
       *
