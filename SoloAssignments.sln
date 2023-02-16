@@ -7,7 +7,7 @@ Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "A1-ContactList", "A1-Contac
 EndProject
 Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "A2-ItemList", "A2-ItemList\A2-ItemList.cblproj", "{477509FF-A781-4020-ABB0-84658E2FDF0D}"
 EndProject
-Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "A3-SalesComm", "A3-SalesComm\A3-SalesComm.cblproj", "{AB27D0CE-F9A4-47E8-BB20-2C379F071D0A}"
+Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "A3-SalesComm1", "A3-SalesComm1\A3-SalesComm1.cblproj", "{8210458C-C552-4A84-A9C2-4988F3B58521}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{477509FF-A781-4020-ABB0-84658E2FDF0D}.Debug|x86.Build.0 = Debug|x86
 		{477509FF-A781-4020-ABB0-84658E2FDF0D}.Release|x86.ActiveCfg = Release|x86
 		{477509FF-A781-4020-ABB0-84658E2FDF0D}.Release|x86.Build.0 = Release|x86
-		{AB27D0CE-F9A4-47E8-BB20-2C379F071D0A}.Debug|x86.ActiveCfg = Debug|x86
-		{AB27D0CE-F9A4-47E8-BB20-2C379F071D0A}.Debug|x86.Build.0 = Debug|x86
-		{AB27D0CE-F9A4-47E8-BB20-2C379F071D0A}.Release|x86.ActiveCfg = Release|x86
-		{AB27D0CE-F9A4-47E8-BB20-2C379F071D0A}.Release|x86.Build.0 = Release|x86
+		{8210458C-C552-4A84-A9C2-4988F3B58521}.Debug|x86.ActiveCfg = Debug|x86
+		{8210458C-C552-4A84-A9C2-4988F3B58521}.Debug|x86.Build.0 = Debug|x86
+		{8210458C-C552-4A84-A9C2-4988F3B58521}.Release|x86.ActiveCfg = Release|x86
+		{8210458C-C552-4A84-A9C2-4988F3B58521}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

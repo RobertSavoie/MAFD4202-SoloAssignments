@@ -2,10 +2,10 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>b1c502c7-0bef-46bf-9b2b-f29c0c929b24</ProjectGuid>
-    <OutputName>A3_SalesComm</OutputName>
+    <ProjectGuid>{8210458C-C552-4A84-A9C2-4988F3B58521}</ProjectGuid>
+    <OutputName>A3_SalesComm1</OutputName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>A3_SalesComm</RootNamespace>
+    <RootNamespace>A3_SalesComm1</RootNamespace>
     <MFProjectType>Native</MFProjectType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
