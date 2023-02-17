@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>b1c502c7-0bef-46bf-9b2b-f29c0c929b24</ProjectGuid>
+    <ProjectGuid>5b6f7cf8-6611-4dec-8556-8e82204fb613</ProjectGuid>
     <OutputName>A3_SalesComm</OutputName>
     <OutputType>Exe</OutputType>
     <RootNamespace>A3_SalesComm</RootNamespace>
