@@ -71,44 +71,101 @@
            05 filler                   pic x(2)  value spaces.
       *
        01 ws-heading-dashes.
-           05 filler                   pic x(3)  value "---".
-           05 filler                   pic x(3)  value spaces.
-           05 filler                   pic x(8)  value "--------".
-           05 filler                   pic x(3)  value spaces.
-           05 filler                   pic x(7)  value "-------".
-           05 filler                   pic x(2)  value spaces.
-           05 filler                   pic x(7)  value "-------".
-           05 filler                   pic x(2)  value spaces.
-           05 filler                   pic x(7)  value "-------".
-           05 filler                   pic x(2)  value spaces.
-           05 filler                   pic x(5)  value "-----".
-           05 filler                   pic x(1)  value spaces.
-           05 filler                   pic x(10) value "----------".
-           05 filler                   pic x(2)  value spaces.
-           05 filler                   pic x(10) value "----------".
-           05 filler                   pic x(2)  value spaces.
-           05 filler                   pic x(16) value
+           05 filler                   pic x(3)   value "---".
+           05 filler                   pic x(3)   value spaces.
+           05 filler                   pic x(8)   value "--------".
+           05 filler                   pic x(3)   value spaces.
+           05 filler                   pic x(7)   value "-------".
+           05 filler                   pic x(2)   value spaces.
+           05 filler                   pic x(7)   value "-------".
+           05 filler                   pic x(2)   value spaces.
+           05 filler                   pic x(7)   value "-------".
+           05 filler                   pic x(2)   value spaces.
+           05 filler                   pic x(5)   value "-----".
+           05 filler                   pic x(1)   value spaces.
+           05 filler                   pic x(10)  value "----------".
+           05 filler                   pic x(2)   value spaces.
+           05 filler                   pic x(10)  value "----------".
+           05 filler                   pic x(2)   value spaces.
+           05 filler                   pic x(16)  value
                                        "----------------".
       *
        01 ws-detail-line.
            05 ws-id                    pic x(3).
-           05 filler                   pic x(3)  value spaces.
+           05 filler                   pic x(3)   value spaces.
            05 ws-name                  pic x(8).
-           05 filler                   pic x(3)  value spaces.
+           05 filler                   pic x(3)   value spaces.
            05 ws-sales                 pic ZZZ,ZZ9.
-           05 filler                   pic x(2)  value spaces.
+           05 filler                   pic x(2)   value spaces.
            05 ws-min                   pic ZZZ,ZZ9.
-           05 filler                   pic x(2)  value spaces.
+           05 filler                   pic x(2)   value spaces.
            05 ws-max                   pic ZZZ,ZZ9.
-           05 filler                   pic x(2)  value spaces.
+           05 filler                   pic x(2)   value spaces.
            05 ws-rate                  pic Z9.9.
-           05 filler                   pic x     value "%".
-           05 filler                   pic x(2)  value spaces.
+           05 filler                   pic x      value "%".
+           05 filler                   pic x(2)   value spaces.
            05 ws-earned                pic Z,ZZZ,ZZ9.
-           05 filler                   pic x(2)  value spaces.
+           05 filler                   pic x(2)   value spaces.
            05 ws-paid                  pic $$,$$$,$$9.
-           05 filler                   pic x(2)  value spaces.
+           05 filler                   pic x(2)   value spaces.
            05 ws-bonus                 pic x(16).
+      *
+       01 ws-end-lines.
+           05 ws-total-line.
+               10 filler               pic x(41).
+               10 filler               pic x(9)   value "Totals".
+               10 ws-total-earned      pic $$,$$$,$$9 value 0.
+               10 filler               pic xx     value spaces.
+               10 ws-total-paid        pic $$,$$$,$$9 value 0.
+               10 filler               pic x(18)  value spaces.
+           05 ws-ft-bonus-over-max.
+               10 filler               pic x(38)  value
+                                   "NUMBER WITH BONUS MORE THAN MAX".
+               10 ws-over              pic zz9    value 0.
+               10 filler               pic x(49)  value spaces.
+           05 ws-ft-bonus-under-min.
+               10 filler               pic x(38)  value
+                                   "NUMBER WITH NO BONUS LESS THAN MIN".
+               10 ws-under             pic zz9    value 0.
+               10 filler               pic x(49)  value spaces.
+           05 ws-ft-sales-with-bonus.
+               10 filler               pic x(38)  value
+                                   "NUMBER OF SALESPEOPLE WITH BONUS".
+               10 ws-with              pic zz9    value 0.
+               10 filler               pic x(49)  value space.
+           05 ws-ft-sales-without-bonus.
+               10 filler               pic x(38)  value
+                                   "NUMBER OF SALESPEOPLE WITHOUT BONUS".
+               10 ws-without           pic zz9    value 0.
+               10 filler               pic x(49)  value spaces.
+           05 ws-ft-salespeople.
+               10 filler               pic x(38)  value
+                                   "NUMBER OF SALESPEOPLE".
+               10 ws-salespeople       pic zz9    value 0.
+               10 filler               pic x(49)  value spaces.
+           05 ws-ft-paid-equal.
+               10 filler               pic x(38)  value
+                                   "NUMBER  WITH PAID EQUAL EARNED".
+               10 ws-paid-equal        pic zz9    value 0.
+               10 filler               pic x(49)  value spaces.
+           05 ws-ft-percent-equal.
+               10 filler               pic x(38)  value
+                                   "PERCENT WITH PAID EQUAL EARNED".
+               10 ws-percent-equal     pic zz9.99 value 0.
+               10 filler               pic x      value "%".
+               10 filler               pic x(50)  value spaces.
+           05 ws-ft-high-bonus.
+               10 filler               pic x(38)  value
+                                   "PERCENT WITH BONUS     >300,000".
+               10 ws-high-bonus        pic zz9.99 value 0.
+               10 filler               pic x      value "%".
+               10 filler               pic x(50)  value spaces.
+           05 ws-ft-low-bonus.
+               10 filler               pic x(38)  value
+                                   "PERCENT WITHOUT BONUS <=300,000".
+               10 ws-low-bonus         pic zz9.99 value 0.
+               10 filler               pic x      value "%".
+               10 filler               pic x(50)  value spaces.
       *
       *math storage
        01 ws-math-store.
@@ -123,18 +180,27 @@
       *
       *counters
        01 ws-counters.
-           05 ws-page-count            pic 99    value 1.
-           05 ws-line-count            pic 99.
+           05 ws-cntr-page             pic 99     value 1.
+           05 ws-cntr-line             pic 99     value 0.
+           05 ws-cntr-over-max         pic 99     value 0.
+           05 ws-cntr-under-min        pic 99     value 0.
+           05 ws-cntr-with             pic 99     value 0.
+           05 ws-cntr-without          pic 99     value 0.
+           05 ws-cntr-salespeople      pic 99     value 0.
+           05 ws-cntr-number-equal     pic 99     value 0.
+           05 ws-cntr-percent-equal    pic 99     value 0.
+           05 ws-cntr-high             pic 99     value 0.
+           05 ws-cntr-low              pic 99     value 0.
       *
       *eof constants
-       77 ws-eof-flag                  pic x     value "n".
-       77 ws-eof-Y                     pic x     value "y".
-       77 ws-eof-N                     pic x     value "n".
+       77 ws-eof-flag                  pic x      value "n".
+       77 ws-eof-Y                     pic x      value "y".
+       77 ws-eof-N                     pic x      value "n".
       *
       *constants
-       77 ws-lines-per-page            pic 99    value 10.
-       77 ws-commission-cutoff         pic 9(6)  value 300000.
-       77 ws-commission-rate           pic v9(4) value 0.1525.
+       77 ws-lines-per-page            pic 99     value 10.
+       77 ws-commission-cutoff         pic 9(6)   value 300000.
+       77 ws-commission-rate           pic v9(4)  value 0.1525.
       *
        procedure division.
        000-main.
@@ -142,9 +208,9 @@
            perform 100-open-files.
            perform 110-print-report-heading.
            perform 120-read-file.
-           perform 140-process-pages
+           perform 200-process-pages
              until ws-eof-flag equals ws-eof-Y.
-      *    perform 160-print-report-footer.
+           perform 140-print-report-footer.
            perform 800-close-files.
            goback.
       *
@@ -166,18 +232,9 @@
                at end
                    move ws-eof-Y to ws-eof-flag.
       *
-       140-process-pages.
+       130-print-headings.
       *
-           perform 150-print-headings.
-           perform 200-process-lines
-             varying ws-line-count from 0 by 1
-             until ws-line-count equals ws-lines-per-page
-             or ws-eof-flag equals ws-eof-Y.
-      *    perform 160-print-footer.
-      *
-       150-print-headings.
-      *
-           if ws-page-count is greater than 0
+           if ws-cntr-page is greater than 0
                write report-line
                  from ws-heading-title
                  after advancing page
@@ -193,24 +250,38 @@
              from ws-heading-dashes
              after advancing 1 line.
       *
-       160-print-report-footer.
+       140-print-report-footer.
       *
-      *    perform 500-print-totals.
+           perform 750-print-totals.
+           perform 700-print-counters.
       *
-       170-clear-artifacts.
+       150-clear-artifacts.
       *
            move spaces to ws-detail-line.
            move spaces to ws-math-store.
       *
-       200-process-lines.
+       200-process-pages.
       *
-           perform 170-clear-artifacts
-           perform 300-calculate-earned-commission.
-           perform 420-paid-under-max.
-           perform 400-output-detail-line.
+           perform 130-print-headings.
+           perform 250-process-lines
+             varying ws-cntr-line from 0 by 1
+             until ws-cntr-line equals ws-lines-per-page
+             or ws-eof-flag equals ws-eof-Y.
+      *
+       250-process-lines.
+      *
+           perform 150-clear-artifacts
+           perform 300-calculations.
+           perform 600-output-detail-line.
            perform 120-read-file.
+           add 1 to ws-cntr-salespeople.
       *
-       300-calculate-earned-commission.
+       300-calculations.
+      *    
+           perform 400-calculate-earned-commission.
+           perform 500-calculate-paid.
+      *
+       400-calculate-earned-commission.
       *
            divide sr-rate
                by 100
@@ -242,49 +313,108 @@
 
            end-if.
       *
-       400-calculate-paid.
+       500-calculate-paid.
       *
-           perform 420-paid-under-max.
+           perform 510-sales-over-cutoff.
+           perform 520-sales-under-cutoff.
+           perform 530-earned-over-max.
+           perform 540-earned-under-min.
       *
-       410-paid-under-minimum.
+       510-sales-over-cutoff.
       *
            if sr-sales is greater than ws-commission-cutoff
              then
-               multiply ws-math-earned
-                     by ws-math-rate
-                 giving ws-math-paid
-
-               move ws-math-paid to ws-paid
+               move ws-math-earned to ws-paid
            end-if.
       *
-       420-paid-under-max.
+       520-sales-under-cutoff.
+      *
+           if sr-sales less than or equal to ws-commission-cutoff
+             then
+               move ws-math-earned to ws-paid
+           end-if.
+      *
+       530-earned-over-max.
       *
            if sr-sales is greater than ws-commission-cutoff and
              ws-math-earned is greater than sr-max
              then
                move sr-max to ws-paid
+               add 1 to ws-cntr-over-max
            end-if.
+       540-earned-under-min.
       *
-       430-bonus-over-maximum.
-      *
+           if sr-sales less than or equal to ws-commission-cutoff and
+             ws-math-earned is less than sr-min
+             then
+               move sr-min to ws-paid
+               add 1 to ws-cntr-under-min
+           end-if.
 
       *
-       400-output-detail-line.
+       600-output-detail-line.
       *
-           move sr-sman-num    to ws-id.
-           move sr-name        to ws-name.
-           move sr-sales       to ws-sales.
-           move sr-min         to ws-min.
-           move sr-max         to ws-max.
-           move sr-rate        to ws-rate.
-           move ws-math-earned to ws-earned.
+           move sr-sman-num       to ws-id.
+           move sr-name           to ws-name.
+           move sr-sales          to ws-sales.
+           move sr-min            to ws-min.
+           move sr-max            to ws-max.
+           move sr-rate           to ws-rate.
+           move ws-math-earned    to ws-earned.
            write report-line
              from ws-detail-line
              before advancing 2 lines.
       *
-       500-print-totals.
+       700-print-counters.
       *
+           move ws-cntr-over-max      to ws-over.
+           move ws-cntr-under-min     to ws-under.
+           move ws-cntr-with          to ws-with.
+           move ws-cntr-without       to ws-without.
+           move ws-cntr-salespeople   to ws-salespeople.
+           move ws-cntr-number-equal  to ws-paid-equal.
+           move ws-cntr-percent-equal to ws-percent-equal.
+           move ws-cntr-high          to ws-high-bonus.
+           move ws-cntr-low           to ws-low-bonus.
 
+           write report-line
+             from ws-ft-bonus-over-max
+             before advancing 1 line.
+           write report-line
+             from ws-ft-bonus-under-min
+             before advancing 2 lines.
+
+           write report-line
+             from ws-ft-sales-with-bonus
+             before advancing 1 line.
+           write report-line
+             from ws-ft-sales-without-bonus
+             before advancing 1 line.
+           write report-line
+             from ws-ft-salespeople
+             before advancing 2 lines.
+
+           write report-line
+             from ws-ft-paid-equal
+             before advancing 1 line.
+           write report-line
+             from ws-ft-percent-equal
+             before advancing 2 lines.
+
+           write report-line
+             from ws-ft-high-bonus
+             before advancing 1 line.
+           write report-line
+             from ws-ft-low-bonus
+             before advancing 1 line.
+
+
+      *
+       750-print-totals.
+      *
+           write report-line
+             from ws-total-line
+             before advancing 2 lines.
       *
        800-close-files.
       *

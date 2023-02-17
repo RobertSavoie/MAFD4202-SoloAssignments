@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>5b6f7cf8-6611-4dec-8556-8e82204fb613</ProjectGuid>
+    <ProjectGuid>{5B6F7CF8-6611-4DEC-8556-8E82204FB613}</ProjectGuid>
     <OutputName>A3_SalesComm</OutputName>
     <OutputType>Exe</OutputType>
     <RootNamespace>A3_SalesComm</RootNamespace>
@@ -23,7 +23,7 @@
     <MaxError>100</MaxError>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program1.cbl" />
+    <Compile Include="A3-SalesComm.cbl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
 </Project>
