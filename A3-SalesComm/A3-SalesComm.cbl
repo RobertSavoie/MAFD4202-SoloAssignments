@@ -66,7 +66,8 @@
            05 filler                   pic x(6)   value spaces.
            05 filler                   pic x(4)   value "PAID".
            05 filler                   pic x(5)   value spaces.
-           05 filler                   pic x(14)  value "BONUS/NO BONUS".
+           05 filler                   pic x(14)  value
+                                       "BONUS/NO BONUS".                
            05 filler                   pic x(2)   value spaces.
       *
        01 ws-heading-dashes.
