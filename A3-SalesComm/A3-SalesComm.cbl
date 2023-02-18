@@ -179,6 +179,8 @@
            05 ws-math-paid             pic 9(7).
            05 ws-math-percent-bonus    pic 99v9(4).
            05 ws-math-percent-no       pic 99v9(4).
+      *
+      *persistant totals
        01 ws-math-total.
            05 ws-math-total-earned     pic 9(7).
            05 ws-math-total-paid       pic 9(7).
@@ -221,25 +223,29 @@
            perform 800-close-files.
            goback.
       *
+      *opens files
        100-open-files.
       *
            open input sales-file.
            open output report-file.
            move ws-eof-N to ws-eof-flag.
       *
+      *prints report heading from name line
        110-print-report-heading.
       *
            write report-line
              from ws-heading-name-line
              after advancing 1 line.
       *
+      *reads input file
        120-read-file.
       *
            read sales-file
                at end
                    move ws-eof-Y to ws-eof-flag.
       *
-       130-print-headings.
+      *prints page headings
+       130-print-page-headings.
       *
            if ws-cntr-page is greater than 0
                write report-line
@@ -258,24 +264,28 @@
              after advancing 1 line.
            add 1 to ws-cntr-page.
       *
+      *prints report footer
        140-print-report-footer.
       *
            perform 750-print-totals.
            perform 700-print-counters.
       *
+      *sends spaces to working storage areas to clear artifacts
        150-clear-artifacts.
       *
            move spaces to ws-detail-line.
            move spaces to ws-math-store.
       *
+      *processes pages
        200-process-pages.
       *
-           perform 130-print-headings.
+           perform 130-print-page-headings.
            perform 250-process-lines
              varying ws-cntr-line from 0 by 1
              until ws-cntr-line equals ws-lines-per-page
              or ws-eof-flag equals ws-eof-Y.
       *
+      *processes lines
        250-process-lines.
       *
            perform 150-clear-artifacts
@@ -285,11 +295,13 @@
            perform 570-calculate-totals.
            add 1 to ws-cntr-salespeople.
       *
+      *does calculations
        300-calculations.
       *    
            perform 400-calculate-earned-commission.
            perform 500-calculate-paid.
       *
+      *calculates earned commission
        400-calculate-earned-commission.
       *
            divide sr-rate
@@ -322,6 +334,7 @@
 
            end-if.
       *
+      *calculates amount paid
        500-calculate-paid.
       *
            perform 510-sales-over-cutoff.
@@ -330,6 +343,7 @@
            perform 540-earned-under-min.
            perform 550-calculate-equal.
       *
+      *calculates if over commission cutoff
        510-sales-over-cutoff.
       *
            if sr-sales is greater than ws-commission-cutoff
@@ -339,6 +353,7 @@
                add 1                    to ws-cntr-bonus
            end-if.
       *
+      *calculates if under commission cutoff
        520-sales-under-cutoff.
       *
            if sr-sales less than or equal to ws-commission-cutoff
@@ -348,6 +363,7 @@
                add 1                    to ws-cntr-no-bonus
            end-if.
       *
+      *calculates if earned is over max
        530-earned-over-max.
       *
            if sr-sales is greater than ws-commission-cutoff and
@@ -356,6 +372,8 @@
                move sr-max              to ws-math-paid
                add 1                    to ws-cntr-over-max
            end-if.
+      *
+      *calculates if earned is under max
        540-earned-under-min.
       *
            if sr-sales less than or equal to ws-commission-cutoff and
@@ -365,6 +383,7 @@
                add 1                    to ws-cntr-under-min
            end-if.
       *
+      *checks if earned and paid are the same
        550-calculate-equal.
       *
            if ws-math-earned equals ws-math-paid
@@ -372,6 +391,7 @@
                add 1 to ws-cntr-number-equal
            end-if.
       *
+      *calculates footer percentages
        560-calculate-percentages.
       *
            divide ws-cntr-bonus
@@ -399,6 +419,7 @@
            move ws-math-percent-no      to ws-no-bonus.
            move ws-math-percent-equal   to ws-percent-equal.
       *
+      *calculates total earned and total paid
        570-calculate-totals.
       *
            add ws-math-earned
@@ -406,6 +427,7 @@
            add ws-math-paid
             to ws-math-total-paid   rounded.
       *
+      *creates detail line and writes to file
        600-output-detail-line.
       *
            move sr-sman-num             to ws-id.
@@ -420,6 +442,7 @@
              from ws-detail-line
              before advancing 2 lines.
       *
+      *prints counter lines
        700-print-counters.
       *
            move ws-cntr-over-max        to ws-over.
@@ -460,6 +483,7 @@
              from ws-ft-no-bonus
              before advancing 1 line.
       *
+      *prints totals
        750-print-totals.
       *
            move ws-math-total-earned to ws-total-earned.
@@ -468,6 +492,7 @@
              from ws-total-line
              before advancing 2 lines.
       *
+      *closes files
        800-close-files.
       *
            close sales-file
