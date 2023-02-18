@@ -1,7 +1,9 @@
        identification division.
-       program-id. A3-SalesComm.
-       author. Rob Savoie.
+       program-id.   A3-SalesComm.
+       author.       Rob Savoie.
        date-written. Feb 13/2023.
+      *description:  Accepts saleperson data and then calculates bonus
+      *              and pay information.
       *
        environment division.
       *
