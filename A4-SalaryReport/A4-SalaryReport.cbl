@@ -95,21 +95,22 @@
            05 filler                   pic x       value spaces.
            05 ws-emp-name              pic x(15)   value spaces.
            05 filler                   pic xx      value spaces.
-           05 ws-emp-year              pic z9.
+           05 ws-emp-year              pic z9      value 0.
            05 filler                   pic xx      value spaces.
            05 ws-emp-position          pic x(8)    value spaces.
            05 filler                   pic xx      value spaces.
-           05 ws-emp-pres-salary       pic zz,zz9.99.
+           05 ws-emp-pres-salary       pic zz,zz9.99
+                                                   value 0.
            05 filler                   pic xx      value spaces.
-           05 ws-emp-increase-perc     pic z9.9.
+           05 ws-emp-increase-perc     pic z9.9    value 0.
            05 filler                   pic x       value "%".
            05 filler                   pic xxx     value spaces.
-           05 ws-emp-increase-pay      pic $$$,$$$.99.
+           05 ws-emp-increase-pay      pic $$$,$$9.99
+                                                   value 0.
            05 filler                   pic x       value "+".
            05 filler                   pic x       value spaces.
-           05 filler                   pic x       value "$".
-           05 filler                   pic xx      value spaces.
-           05 ws-emp-new-salary        pic zzz,zz9.99.
+           05 ws-emp-new-salary        pic $z,zzz,zz9.99
+                                                   value 0.
       *
        01 ws-class-heading.
            05 filler                   pic x       value spaces.
@@ -157,6 +158,17 @@
       *
       *constants
        77 ws-lines-per-page            pic 99      value 10.
+       77 ws-grad-code                 pic x       value "G".
+       77 ws-nongrad-code              pic x       value "N".
+       77 ws-grad-analyst-start        pic 99      value 15.
+       77 ws-grad-prog-high            pic 9       value 7.
+       77 ws-grad-prog-low             pic 9       value 2.
+       77 ws-nongrad-prog-start        pic 99      value 10.
+       77 ws-nongrad-jr-start          pic 9       value 4.
+       77 ws-cnst-analyst              pic x(7)    value "ANALYST".
+       77 ws-cnst-senprog              pic x(8)    value "SEN PROG".
+       77 ws-cnst-prog                 pic x(4)    value "PROG".
+       77 ws-cnst-jrprog               pic x(7)    value "JR PROG".
       *
        procedure division.
       *
@@ -223,16 +235,17 @@
       *
        150-clear-artifacts.
       *
-           move spaces to ws-print-line.
+           move spaces to output-line.
            move spaces to ws-math-store.
       *
        200-process-pages.
       *
            perform 125-print-page-headings.
+           perform 150-clear-artifacts.
            perform 250-process-lines
-             varying ws-cntr-line from 0 by 1
-             until ws-cntr-line greater than ws-lines-per-page
-             or ws-eof-flag equals ws-eof-Y.
+             varying ws-cntr-line from 1 by 1
+             until ws-cntr-line > ws-lines-per-page
+             or ws-eof-flag = ws-eof-Y.
            perform 650-print-totals.
       *
        250-process-lines.
@@ -240,16 +253,56 @@
            perform 600-create-output-line.
            perform 50-read-input-file.
       *
+      *determines if an employee is a graduate
+       300-is-graduate.
+      *
+           if il-emp-code      =  ws-grad-code          then
+               if il-emp-years >  ws-grad-analyst-start then
+                   move ws-cnst-analyst to ws-emp-position
+               end-if
+               if il-emp-years <= ws-grad-analyst-start and
+                  il-emp-years >= ws-grad-prog-high     then
+                   move ws-cnst-senprog to ws-emp-position
+               end-if
+               if il-emp-years <  ws-grad-prog-high     and
+                  il-emp-years >  ws-grad-prog-low      then
+                   move ws-cnst-prog    to ws-emp-position
+               end-if
+               if il-emp-years <= ws-grad-prog-low      then
+                   move spaces          to ws-emp-position
+               end-if
+           end-if.
+      *
+      *determines if an employee isn't a graduate
+       350-not-graduate.
+      *
+           if il-emp-code      =  ws-nongrad-code       then
+               if il-emp-years >  ws-nongrad-prog-start then
+                   move ws-cnst-prog    to ws-emp-position
+               end-if
+               if il-emp-years <= ws-nongrad-prog-start and
+                  il-emp-years >  ws-nongrad-jr-start   then
+                   move ws-cnst-jrprog  to ws-emp-position
+               end-if
+               if il-emp-years <= ws-nongrad-jr-start   then
+                   move spaces          to ws-emp-position
+               end-if
+           end-if.
+      *
+      *creates details line for output
        600-create-output-line.
       *
-           move il-emp-num         to ws-emp-num.
-           move il-emp-name        to ws-emp-name.
-           move il-emp-years       to ws-emp-year.
-           move il-emp-sal         to ws-emp-pres-salary.
+           perform 300-is-graduate.
+           perform 350-not-graduate.
+           move il-emp-num   to ws-emp-num.
+           move il-emp-name  to ws-emp-name.
+           move il-emp-years to ws-emp-year.
+           move il-emp-sal   to ws-emp-pres-salary.
            write output-line
              from ws-print-line
              before advancing 1 line.
       *
+      *print position totals
        650-print-totals.
       *
            write output-line

@@ -5,17 +5,16 @@ Rob Savoie, Assignment 4               20220111                          1951043
 
  EMP  EMP                            PRESENT  INCREASE     PAY           NEW NUM  NAME          YEARS POSITION    SALARY     %       INCREASE       SALARY
 
- 030 ALLDREN RUTH     21            20,200.00      %             + $
- 004 ACHER WILLIAM     1             7,260.05      %             + $
- 730 REEDE OWEN        9             5,550.10      %             + $
- 409 ICK MICK         25            99,999.99      %             + $
- 111 CARTOLER VIOLET   2             9,980.07      %             + $
- 590 NEIL CLARENCE     7               650.09      %             + $
- 105 BOYLE RALPH       8            80,440.14      %             + $
- 801 SCHEIBER HARRY    1            10,000.00      %             + $
- 487 KING MILDRED     18             9,199.63      %             + $
- 956 WANGLEY THEO      1             9,999.91      %             + $
- 317 HANBEE ALETA      3            50,000.03      %             + $
+ 030 ALLDREN RUTH     21  ANALYST   20,200.00   0.0%        $0.00+ $        0.00
+ 004 ACHER WILLIAM     1             7,260.05   0.0%        $0.00+ $        0.00
+ 730 REEDE OWEN        9  SEN PROG   5,550.10   0.0%        $0.00+ $        0.00
+ 409 ICK MICK         25  ANALYST   99,999.99   0.0%        $0.00+ $        0.00
+ 111 CARTOLER VIOLET   2             9,980.07   0.0%        $0.00+ $        0.00
+ 590 NEIL CLARENCE     7  JR PROG      650.09   0.0%        $0.00+ $        0.00
+ 105 BOYLE RALPH       8  JR PROG   80,440.14   0.0%        $0.00+ $        0.00
+ 801 SCHEIBER HARRY    1            10,000.00   0.0%        $0.00+ $        0.00
+ 487 KING MILDRED     18  PROG       9,199.63   0.0%        $0.00+ $        0.00
+ 956 WANGLEY THEO      1             9,999.91   0.0%        $0.00+ $        0.00
 
  EMPLOYEE CLASS:        Analyst    Sen Prog    Prog    Jr Prog    Unclassified # ON THIS PAGE:              0           0       0          0               0
 
@@ -23,17 +22,16 @@ Rob Savoie, Assignment 4               20220111                          1951043
 
  EMP  EMP                            PRESENT  INCREASE     PAY           NEW NUM  NAME          YEARS POSITION    SALARY     %       INCREASE       SALARY
 
- 318 HANEY CAROL       9            50,000.14      %             + $
- 027 ALHOUER ELAINE    1            25,730.02      %             + $
- 100 BATES TONY        8            10,660.20      %             + $
- 102 BELLSLEY ART      8            30,000.09      %             + $
- 282 ESTABAN JUAN     19            40,550.00      %             + $
- 322 HARLETON JEAN     7             8,990.12      %             + $
- 310 GORMALLY MARIE    3            30,220.06      %             + $
- 921 ULL GEORGE       18            22,988.51      %             + $
- 179 DAMSON ERIC       3            25,020.18      %             + $
- 185 DONNEMAN THOMAS   6             4,230.09      %             + $
- 568 LYNNF GERALD      9            44,870.13      %             + $
+ 317 HANBEE ALETA      3  PROG      50,000.03   0.0%        $0.00+ $        0.00
+ 318 HANEY CAROL       9  SEN PROG  50,000.14   0.0%        $0.00+ $        0.00
+ 027 ALHOUER ELAINE    1            25,730.02   0.0%        $0.00+ $        0.00
+ 100 BATES TONY        8  JR PROG   10,660.20   0.0%        $0.00+ $        0.00
+ 102 BELLSLEY ART      8  SEN PROG  30,000.09   0.0%        $0.00+ $        0.00
+ 282 ESTABAN JUAN     19  ANALYST   40,550.00   0.0%        $0.00+ $        0.00
+ 322 HARLETON JEAN     7  JR PROG    8,990.12   0.0%        $0.00+ $        0.00
+ 310 GORMALLY MARIE    3            30,220.06   0.0%        $0.00+ $        0.00
+ 921 ULL GEORGE       18  PROG      22,988.51   0.0%        $0.00+ $        0.00
+ 179 DAMSON ERIC       3  PROG      25,020.18   0.0%        $0.00+ $        0.00
 
  EMPLOYEE CLASS:        Analyst    Sen Prog    Prog    Jr Prog    Unclassified # ON THIS PAGE:              0           0       0          0               0
 
@@ -41,17 +39,16 @@ Rob Savoie, Assignment 4               20220111                          1951043
 
  EMP  EMP                            PRESENT  INCREASE     PAY           NEW NUM  NAME          YEARS POSITION    SALARY     %       INCREASE       SALARY
 
- 999 BAKER RON         3            30,000.14      %             + $
- 215 EDSON WILBUR      6            70,500.08      %             + $
- 607 ODELLE NICK      10            25,070.18      %             + $
- 171 COSTA NAN        15             3,560.05      %             + $
- 122 CENNA DICK        3            57,770.04      %             + $
- 181 DELBERT EDWARD   12             6,590.13      %             + $
- 311 GROLER GRACE     23             6,430.20      %             + $
- 825 TILLMAN DON      12             4,440.19      %             + $
- 325 HATFIELD MARK     1            11,220.02      %             + $
- 214 EDMONSON RICK     2            10,000.00      %             + $
- 332 HELD ANNA         2            40,000.02      %             + $
+ 185 DONNEMAN THOMAS   6  PROG       4,230.09   0.0%        $0.00+ $        0.00
+ 568 LYNNF GERALD      9  JR PROG   44,870.13   0.0%        $0.00+ $        0.00
+ 999 BAKER RON         3  PROG      30,000.14   0.0%        $0.00+ $        0.00
+ 215 EDSON WILBUR      6  JR PROG   70,500.08   0.0%        $0.00+ $        0.00
+ 607 ODELLE NICK      10  JR PROG   25,070.18   0.0%        $0.00+ $        0.00
+ 171 COSTA NAN        15  PROG       3,560.05   0.0%        $0.00+ $        0.00
+ 122 CENNA DICK        3            57,770.04   0.0%        $0.00+ $        0.00
+ 181 DELBERT EDWARD   12  SEN PROG   6,590.13   0.0%        $0.00+ $        0.00
+ 311 GROLER GRACE     23  PROG       6,430.20   0.0%        $0.00+ $        0.00
+ 825 TILLMAN DON      12  PROG       4,440.19   0.0%        $0.00+ $        0.00
 
  EMPLOYEE CLASS:        Analyst    Sen Prog    Prog    Jr Prog    Unclassified # ON THIS PAGE:              0           0       0          0               0
 
@@ -59,17 +56,27 @@ Rob Savoie, Assignment 4               20220111                          1951043
 
  EMP  EMP                            PRESENT  INCREASE     PAY           NEW NUM  NAME          YEARS POSITION    SALARY     %       INCREASE       SALARY
 
- 689 OWNEY REED        4            31,746.03      %             + $
- 834 TRAWLEY HARRIS    5            73,260.05      %             + $
- 802 SHEA MICHAEL      6            20,330.08      %             + $
- 505 LAMBERT JERRY     1            40,010.04      %             + $
- 806 STOCKTON NORMAN   6            25,070.07      %             + $
- 207 EBERHARDT RON     5            40,070.09      %             + $
- 315 HALE ALAN        12            40,000.16      %             + $
- 739 RIDEL ROBERT      5             1,940.08      %             + $
- 308 GLEASON JAMES     1            50,000.03      %             + $
- 909 UDSON DORIS       1            44,990.03      %             + $
- 292 EVERLEY DONNA     3            20,000.17      %             + $
+ 325 HATFIELD MARK     1            11,220.02   0.0%        $0.00+ $        0.00
+ 214 EDMONSON RICK     2            10,000.00   0.0%        $0.00+ $        0.00
+ 332 HELD ANNA         2            40,000.02   0.0%        $0.00+ $        0.00
+ 689 OWNEY REED        4            31,746.03   0.0%        $0.00+ $        0.00
+ 834 TRAWLEY HARRIS    5  JR PROG   73,260.05   0.0%        $0.00+ $        0.00
+ 802 SHEA MICHAEL      6  PROG      20,330.08   0.0%        $0.00+ $        0.00
+ 505 LAMBERT JERRY     1            40,010.04   0.0%        $0.00+ $        0.00
+ 806 STOCKTON NORMAN   6  PROG      25,070.07   0.0%        $0.00+ $        0.00
+ 207 EBERHARDT RON     5  PROG      40,070.09   0.0%        $0.00+ $        0.00
+ 315 HALE ALAN        12  PROG      40,000.16   0.0%        $0.00+ $        0.00
+
+ EMPLOYEE CLASS:        Analyst    Sen Prog    Prog    Jr Prog    Unclassified # ON THIS PAGE:              0           0       0          0               0
+
+                              EMPLOYEE SALARY REPORT               PAGE  5
+
+ EMP  EMP                            PRESENT  INCREASE     PAY           NEW NUM  NAME          YEARS POSITION    SALARY     %       INCREASE       SALARY
+
+ 739 RIDEL ROBERT      5  JR PROG    1,940.08   0.0%        $0.00+ $        0.00
+ 308 GLEASON JAMES     1            50,000.03   0.0%        $0.00+ $        0.00
+ 909 UDSON DORIS       1            44,990.03   0.0%        $0.00+ $        0.00
+ 292 EVERLEY DONNA     3  PROG      20,000.17   0.0%        $0.00+ $        0.00
 
  EMPLOYEE CLASS:        Analyst    Sen Prog    Prog    Jr Prog    Unclassified # ON THIS PAGE:              0           0       0          0               0
 
