@@ -480,7 +480,7 @@
            giving ws-math-percent.
       *
            if ws-emp-position = " " then
-               move spaces                   to ws-emp-increase-perc
+               move cnst-unclass-increase    to ws-emp-increase-perc
       *
                multiply il-emp-sal
                      by ws-math-percent
