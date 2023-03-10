@@ -37,6 +37,7 @@
       *
        working-storage section.
       *
+      *name line
        01 ws-name-line.
            05 filler                   pic x(24)   value
                                        "Rob Savoie, Assignment 4".
@@ -45,6 +46,7 @@
            05 filler                   pic x(26)   value spaces.
            05 filler                   pic x(7)    value "1951043".
       *
+      *page heading
        01 ws-page-heading.
            05 filler                   pic x(30)   value spaces.
            05 filler                   pic x(23)   value
@@ -55,6 +57,7 @@
            05 ws-page-number           pic z9.
            05 filler                   pic x(6).
       *
+      *top column header
        01 ws-column-head-one.
            05 filler                   pic x       value spaces.
            05 filler                   pic xxx     value "EMP".
@@ -70,6 +73,7 @@
            05 filler                   pic xxx     value "NEW".
            05 filler                   pic x(4)    value spaces.
       *
+      *bottom column header
        01 ws-column-head-two.
            05 filler                   pic x       value spaces.
            05 filler                   pic xxx     value "NUM".
@@ -89,6 +93,7 @@
            05 filler                   pic x(6)    value "SALARY".
            05 filler                   pic xx      value spaces.
       *
+      *formatted print detail line
        01 ws-print-line.
            05 filler                   pic x       value spaces.
            05 ws-emp-num               pic xxx     value spaces.
@@ -111,6 +116,7 @@
            05 ws-emp-new-salary        pic $z,zzz,zz9.99
                                                    value 0.
       *
+      *employee class heading
        01 ws-class-heading.
            05 filler                   pic x       value spaces.
            05 filler                   pic x(15)   value
@@ -127,6 +133,7 @@
            05 filler                   pic x(12)   value "Unclassified".
            05 filler                   pic x(2)    value spaces.
       *
+      *employee class totals
        01 ws-class-totals.
            05 filler                   pic x       value spaces.
            05 filler                   pic x(15)   value
@@ -143,6 +150,7 @@
            05 ws-unclassified-total    pic z9      value 0.
            05 filler                   pic xx      value spaces.
       *
+      *first average line
        01 ws-increase-average-one.
            05 filler                   pic x       value spaces.
            05 filler                   pic x(18)   value 
@@ -159,6 +167,7 @@
                                                    value 0.
            05 filler                   pic x(12)   value spaces.
       *
+      *second average line
        01 ws-increase-average-two.
            05 filler                   pic x(22)   value spaces.
            05 filler                   pic x(5)    value "PROG=".
@@ -172,18 +181,21 @@
                                                    value 0.
            05 filler                   pic x(12)   value spaces.
       *
+      *regular math variables
        01 ws-math-store.
            05 ws-math-increase-pay     pic 9(9)v99.
            05 ws-math-new-salary       pic 9(9)v99.
            05 ws-math-average          pic 9(9)v99.
            05 ws-math-percent          pic 9v999.
       *
+      *totals used for math
        01 ws-math-totals.
            05 ws-math-analyst-total    pic 9(7)v9(4).
            05 ws-math-senprog-total    pic 9(7)v9(4).
            05 ws-math-prog-total       pic 9(7)v9(4).
            05 ws-math-jrprog-total     pic 9(7)v9(4).
       *
+      *page specific counters
        01 ws-page-counters.
            05 ws-cntr-analyst          pic 99      value 0.
            05 ws-cntr-senprog          pic 99      value 0.
@@ -191,6 +203,7 @@
            05 ws-cntr-jrprog           pic 99      value 0.
            05 ws-cntr-unclass          pic 99      value 0.
       *
+      *global counters
        01 ws-global-counters.
            05 ws-global-cntr-page      pic 99      value 0.
            05 ws-global-cntr-line      pic 99      value 0.
@@ -249,33 +262,48 @@
       *
            goback.
       *
+      *open files
        25-open-files.
       *
            open input input-file.
            open output output-file.
       *
+      *read input file
        50-read-input-file.
       *
            read input-file
                at end
                    move eof-Y to eof-flag.
       *
+      *closes files
        75-close-files.
       *
            close input-file
                output-file.
       *
+      *clears output-line and ws-math-store
        80-clear-artifacts.
       *
            move spaces to output-line.
            move spaces to ws-math-store.
       *
+      *resets counters to 0 for each page
+       90-clear-page-counters.
+      *
+           move 0 to ws-cntr-analyst.
+           move 0 to ws-cntr-senprog.
+           move 0 to ws-cntr-prog.
+           move 0 to ws-cntr-jrprog.
+           move 0 to ws-cntr-unclass.
+      *
+      *prints report heading
        100-print-report-heading.
       *
            write output-line
              from ws-name-line
              after advancing 1 line.
       *
+      *prints page headings
        125-print-page-headings.
       *
            if ws-global-cntr-page > 0
@@ -300,6 +328,7 @@
              from ws-column-head-two
              before advancing 2 lines.
       *
+      *prints average salary increase footers
        150-print-average-increases.
       *
            write output-line
@@ -308,13 +337,10 @@
            write output-line
              from ws-increase-average-two.
       *
+      *processes each page until the counter goes over 10
        200-process-pages.
       *
-           move 0 to ws-cntr-analyst.
-           move 0 to ws-cntr-senprog.
-           move 0 to ws-cntr-prog.
-           move 0 to ws-cntr-jrprog.
-           move 0 to ws-cntr-unclass.
+           perform 90-clear-page-counters.
            perform 125-print-page-headings.
            perform 250-process-lines
              varying ws-global-cntr-line from 1 by 1
@@ -322,6 +348,7 @@
              or eof-flag = eof-Y.
            perform 650-print-totals.
       *
+      *processes the lines for each page
        250-process-lines.
       *
            perform 80-clear-artifacts.
@@ -388,20 +415,27 @@
       *calculates pay increase for analysts
        410-calculate-increase-analyst.
       *
+      *    creates usable number for multiplication
            divide cnst-math-analyst-increase
                by 100
            giving ws-math-percent.
       *
+      *    sends percentage string to print line
            if ws-emp-position = cnst-analyst then
                move cnst-analyst-increase    to ws-emp-increase-perc
       *
+      *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
                      by ws-math-percent
                  giving ws-math-increase-pay rounded
+      *    adds increase pay to total and moves increase amount
+      *    to print line
                add  ws-math-increase-pay
                 to  ws-math-analyst-total    
                move ws-math-increase-pay     to ws-emp-increase-pay
       *        
+      *    adds increase amount to base salary the moves it
+      *    to the print line
                add ws-math-increase-pay
                 to il-emp-sal
             giving ws-math-new-salary
@@ -411,20 +445,27 @@
       *calculates pay increase for senior programmers
        420-calculate-increase-senprog.
       *
+      *    creates usable number for multiplication
            divide cnst-math-senprog-increase
                by 100
            giving ws-math-percent.
       *
+      *    sends percentage string to print line
            if ws-emp-position = cnst-senprog then
                move cnst-senprog-increase    to ws-emp-increase-perc
       *
+      *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
                      by ws-math-percent
                  giving ws-math-increase-pay rounded
-               add  ws-math-increase-pay
+      *    adds increase pay to total and moves increase amount
+      *    to print line
+               add ws-math-increase-pay
                 to  ws-math-senprog-total    
                move ws-math-increase-pay     to ws-emp-increase-pay
       *
+      *    adds increase amount to base salary the moves it
+      *    to the print line
                add ws-math-increase-pay
                 to il-emp-sal
             giving ws-math-new-salary
@@ -434,20 +475,27 @@
       *calculates pay increase for programmers
        430-calculate-increase-prog.
       *
+      *    creates usable number for multiplication
            divide cnst-math-prog-increase
                by 100
            giving ws-math-percent.
       *
+      *    sends percentage string to print line
            if ws-emp-position = cnst-prog    then
                move cnst-prog-increase       to ws-emp-increase-perc
       *
+      *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
                      by ws-math-percent
                  giving ws-math-increase-pay rounded
-               add  ws-math-increase-pay
+      *    adds increase pay to total and moves increase amount
+      *    to print line
+               add ws-math-increase-pay
                 to  ws-math-prog-total       
                move ws-math-increase-pay     to ws-emp-increase-pay
       *
+      *    adds increase amount to base salary the moves it
+      *    to the print line
                add ws-math-increase-pay
                 to il-emp-sal
             giving ws-math-new-salary
@@ -457,20 +505,27 @@
       *calculates pay increase for junior programmers
        440-calculate-increase-jrprog.
       *
+      *    creates usable number for multiplication
            divide cnst-math-jrprog-increase
                by 100
            giving ws-math-percent.
       *
+      *    sends percentage string to print line
            if ws-emp-position = cnst-jrprog  then
                move cnst-jrprog-increase     to ws-emp-increase-perc
       *
+      *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
                      by ws-math-percent
                  giving ws-math-increase-pay rounded
-               add  ws-math-increase-pay
+      *    adds increase pay to total and moves increase amount
+      *    to print line
+               add ws-math-increase-pay
                 to  ws-math-jrprog-total     
                move ws-math-increase-pay     to ws-emp-increase-pay
       *
+      *    adds increase amount to base salary the moves it
+      *    to the print line
                add ws-math-increase-pay
                 to il-emp-sal
             giving ws-math-new-salary
@@ -484,14 +539,18 @@
                by 100
            giving ws-math-percent.
       *
+      *    sends percentage string to print line
            if ws-emp-position = " " then
                move cnst-unclass-increase    to ws-emp-increase-perc
       *
                multiply il-emp-sal
+      *    multiplies salary by percent to get increase amount
                      by ws-math-percent
                  giving ws-math-increase-pay rounded
                move ws-math-increase-pay     to ws-emp-increase-pay
       *
+      *    adds increase amount to base salary the moves it
+      *    to the print line
                add ws-math-increase-pay
                 to il-emp-sal
             giving ws-math-new-salary
