@@ -102,8 +102,7 @@
            05 ws-emp-pres-salary       pic zz,zz9.99
                                                    value 0.
            05 filler                   pic xx      value spaces.
-           05 ws-emp-increase-perc     pic z9.9    value 0.
-           05 filler                   pic x       value "%".
+           05 ws-emp-increase-perc     pic x(5)    value space.
            05 filler                   pic xxx     value spaces.
            05 ws-emp-increase-pay      pic $$$,$$9.99
                                                    value 0.
@@ -219,11 +218,17 @@
        77 cnst-senprog                 pic x(8)    value "SEN PROG".
        77 cnst-prog                    pic x(4)    value "PROG".
        77 cnst-jrprog                  pic x(7)    value "JR PROG".
-       77 cnst-analyst-increase        pic 99v9    value 12.8.
-       77 cnst-senprog-increase        pic 9v9     value 9.3.
-       77 cnst-prog-increase           pic 9v9     value 6.7.
-       77 cnst-jrprog-increase         pic 9v9     value 3.2.
-       77 cnst-unclass-increase        pic 9       value 0.
+       77 cnst-analyst-increase        pic x(5)    value "12.8%".
+       77 cnst-senprog-increase        pic x(5)    value " 9.3%".
+       77 cnst-prog-increase           pic x(5)    value " 6.7%".
+       77 cnst-jrprog-increase         pic x(5)    value " 3.2%".
+       77 cnst-unclass-increase        pic x(5)    value spaces.
+       77 cnst-math-analyst-increase   pic 99v9    value 12.8.
+       77 cnst-math-senprog-increase   pic 9v9     value 9.3.
+       77 cnst-math-prog-increase      pic 9v9     value 6.7.
+       77 cnst-math-jrprog-increase    pic 9v9     value 3.2.
+       77 cnst-math-unclass-increase   pic 9       value 0.
+
       *
        procedure division.
       *
@@ -260,7 +265,7 @@
            close input-file
                output-file.
       *
-       90-clear-artifacts.
+       80-clear-artifacts.
       *
            move spaces to output-line.
            move spaces to ws-math-store.
@@ -319,7 +324,7 @@
       *
        250-process-lines.
       *
-           perform 90-clear-artifacts.
+           perform 80-clear-artifacts.
            perform 600-create-output-line.
            perform 50-read-input-file.
       *
@@ -383,7 +388,7 @@
       *calculates pay increase for analysts
        410-calculate-increase-analyst.
       *
-           divide cnst-analyst-increase
+           divide cnst-math-analyst-increase
                by 100
            giving ws-math-percent.
       *
@@ -406,7 +411,7 @@
       *calculates pay increase for senior programmers
        420-calculate-increase-senprog.
       *
-           divide cnst-senprog-increase
+           divide cnst-math-senprog-increase
                by 100
            giving ws-math-percent.
       *
@@ -429,7 +434,7 @@
       *calculates pay increase for programmers
        430-calculate-increase-prog.
       *
-           divide cnst-prog-increase
+           divide cnst-math-prog-increase
                by 100
            giving ws-math-percent.
       *
@@ -452,7 +457,7 @@
       *calculates pay increase for junior programmers
        440-calculate-increase-jrprog.
       *
-           divide cnst-jrprog-increase
+           divide cnst-math-jrprog-increase
                by 100
            giving ws-math-percent.
       *
@@ -475,7 +480,7 @@
       *calculates pay increase for junior programmers
        450-calculate-increase-unclass.
       *
-           divide cnst-unclass-increase
+           divide cnst-math-unclass-increase
                by 100
            giving ws-math-percent.
       *
