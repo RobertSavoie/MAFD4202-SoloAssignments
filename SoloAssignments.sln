@@ -13,6 +13,8 @@ Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "MidtermTest", "MidtermTest\
 EndProject
 Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "A4-SalaryReport", "A4-SalaryReport\A4-SalaryReport.cblproj", "{54574872-2931-4C55-B02F-BB3F267FAEEE}"
 EndProject
+Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "A5-SalaryReport", "A5-SalaryReport\A5-SalaryReport.cblproj", "{C60FF54C-B56B-4DA5-888B-91F2E1D29562}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -39,6 +41,10 @@ Global
 		{54574872-2931-4C55-B02F-BB3F267FAEEE}.Debug|x86.Build.0 = Debug|x86
 		{54574872-2931-4C55-B02F-BB3F267FAEEE}.Release|x86.ActiveCfg = Release|x86
 		{54574872-2931-4C55-B02F-BB3F267FAEEE}.Release|x86.Build.0 = Release|x86
+		{C60FF54C-B56B-4DA5-888B-91F2E1D29562}.Debug|x86.ActiveCfg = Debug|x86
+		{C60FF54C-B56B-4DA5-888B-91F2E1D29562}.Debug|x86.Build.0 = Debug|x86
+		{C60FF54C-B56B-4DA5-888B-91F2E1D29562}.Release|x86.ActiveCfg = Release|x86
+		{C60FF54C-B56B-4DA5-888B-91F2E1D29562}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
