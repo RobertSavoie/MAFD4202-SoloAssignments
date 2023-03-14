@@ -152,10 +152,8 @@
            05 filler                   pic x(4)    value spaces.
            05 filler                   pic x(4)    value "Prog".
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(7)    value "Jr Prog".
-           05 filler                   pic x(4)    value spaces.
            05 filler                   pic x(12)   value "Unclassified".
-           05 filler                   pic x(2)    value spaces.
+           05 filler                   pic x(43)    value spaces.
       *
       *employee class totals
        01 ws-class-totals.
@@ -168,11 +166,9 @@
            05 ws-sen-prog-total        pic z9      value 0.
            05 filler                   pic x(6)    value spaces.
            05 ws-prog-total            pic z9      value 0.
-           05 filler                   pic x(9)    value spaces.
-           05 ws-jrprog-total          pic z9      value 0.
            05 filler                   pic x(14)   value spaces.
            05 ws-unclassified-total    pic z9      value 0.
-           05 filler                   pic xx      value spaces.
+           05 filler                   pic x(43)   value spaces.
       *
       *first average line
        01 ws-increase-average-one.
@@ -189,7 +185,7 @@
            05 filler                   pic xxx     value spaces.
            05 ws-senprog-average       pic z,zz9.99
                                                    value 0.
-           05 filler                   pic x(12)   value spaces.
+           05 filler                   pic x(42)   value spaces.
       *
       *second average line
        01 ws-increase-average-two.
@@ -200,7 +196,17 @@
                                                    value 0.
            05 filler                   pic x(5)    value spaces.
            05 filler                   pic x(20)   value spaces.
-           05 filler                   pic x(12)   value spaces.
+           05 filler                   pic x(42)   value spaces.
+      *
+      *budget difference
+       01 ws-total-budget-diff.
+           05 filler                   pic x       value spaces.
+           05 filler                   pic x(27)   value
+                                       "GRADUATE TOTAL BUDGET DIFF:".
+           05 filler                   pic x(5)    value spaces.
+           05 ws-total-budget          pic zzz,zz9.99
+                                                   value 0.
+           05 filler                   pic x(67)   value spaces.
       *
       *regular math variables
        01 ws-math-store.
@@ -209,12 +215,15 @@
            05 ws-math-average          pic 9(9)v99.
            05 ws-math-percent          pic 9v999.
            05 ws-math-budget-diff      pic 9(6)v99.
+           05 ws-math-diff             pic 9(6)v99.
       *
       *totals used for math
        01 ws-math-totals.
            05 ws-math-analyst-total    pic 9(7)v9(4).
            05 ws-math-senprog-total    pic 9(7)v9(4).
            05 ws-math-prog-total       pic 9(7)v9(4).
+           05 ws-math-total-diff       pic 9(6)v99.
+           05 ws-math-total-sub        pic 9(6)v99.
       *
       *page specific counters
        01 ws-page-counters.
@@ -350,6 +359,20 @@
            write output-line
              from ws-increase-average-two.
       *
+           write output-line
+             from ws-total-budget-diff
+             after advancing 1 line.
+      *
+       160-print-totals.
+      *
+      *print position totals
+           write output-line
+             from ws-class-heading
+             after advancing 1 line.
+           write output-line
+             from ws-class-totals
+             before advancing 2 lines.
+      *
        200-process-pages.
       *
       *processes each page until the counter goes over 10
@@ -359,14 +382,14 @@
              varying ws-global-cntr-line from 1 by 1
              until ws-global-cntr-line = cnst-lines-per-page
              or eof-flag = eof-Y.
-           perform 650-print-totals.
+           perform 160-print-totals.
       *
        250-process-lines.
       *
       *processes the lines for each page
            perform 80-clear-artifacts.
            if il-emp-code = cnst-nongrad-code
-               perform 500-create-nongrad-file
+               perform 600-create-nongrad-file
            else
                perform 300-create-output-line
                subtract 1 from ws-global-cntr-line
@@ -559,30 +582,32 @@
        470-calculate-budget-diff.
       *
       *calculates the budget difference
-           if ws-math-new-salary > il-emp-budget-est
-               move "-"    to ws-minus
-           else
-               move spaces to ws-minus
-           end-if.
            subtract ws-math-new-salary
                from il-emp-budget-est
              giving ws-math-budget-diff.
       *
                move ws-math-budget-diff to ws-emp-budget-diff.
       *
-       500-create-nongrad-file.
+           if ws-math-new-salary > il-emp-budget-est
+               move "-"    to ws-minus
+               add ws-math-budget-diff
+                to ws-math-total-sub
+           else
+               move spaces to ws-minus
+               add ws-math-budget-diff
+                to ws-math-total-diff
+           end-if.
+      *
+           subtract ws-math-total-sub
+               from ws-math-total-diff
+             giving ws-math-budget-diff.
+      *
+           move ws-math-budget-diff
+             to ws-total-budget.
+      *
+       600-create-nongrad-file.
       *
       *creates output file for new data file
            write nongrad-line from input-line.
-      *
-       650-print-totals.
-      *
-      *print position totals
-           write output-line
-             from ws-class-heading
-             after advancing 1 line.
-           write output-line
-             from ws-class-totals
-             before advancing 2 lines.
       *
        end program A5-SalaryReport-5A.

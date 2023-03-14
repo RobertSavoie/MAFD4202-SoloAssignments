@@ -128,7 +128,7 @@
            05 ws-minus                 pic x       value spaces.
            05 ws-emp-budget-diff       pic zzz,zz9.99
                                                    value 0.
-           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(5)    value spaces.
       *
       *employee class heading
        01 ws-class-heading.
@@ -136,33 +136,25 @@
            05 filler                   pic x(15)   value
                                        "EMPLOYEE CLASS:".
            05 filler                   pic x(8)    value spaces.
-           05 filler                   pic x(7)    value "Analyst".
-           05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(8)    value "Sen Prog".
-           05 filler                   pic x(4)    value spaces.
            05 filler                   pic x(4)    value "Prog".
            05 filler                   pic x(4)    value spaces.
            05 filler                   pic x(7)    value "Jr Prog".
            05 filler                   pic x(4)    value spaces.
            05 filler                   pic x(12)   value "Unclassified".
-           05 filler                   pic x(2)    value spaces.
+           05 filler                   pic x(55)   value spaces.
       *
       *employee class totals
        01 ws-class-totals.
            05 filler                   pic x       value spaces.
            05 filler                   pic x(15)   value
                                        "# ON THIS PAGE:".
-           05 filler                   pic x(13)   value spaces.
-           05 ws-analyst-total         pic z9      value 0.
            05 filler                   pic x(10)   value spaces.
-           05 ws-sen-prog-total        pic z9      value 0.
-           05 filler                   pic x(6)    value spaces.
            05 ws-prog-total            pic z9      value 0.
            05 filler                   pic x(9)    value spaces.
            05 ws-jrprog-total          pic z9      value 0.
            05 filler                   pic x(14)   value spaces.
            05 ws-unclassified-total    pic z9      value 0.
-           05 filler                   pic xx      value spaces.
+           05 filler                   pic x(55)   value spaces.
       *
       *first average line
        01 ws-increase-average-one.
@@ -179,7 +171,17 @@
            05 filler                   pic x(4)    value spaces.
            05 ws-jrprog-average        pic z,zz9.99
                                                    value 0.
-           05 filler                   pic x(12)   value spaces.
+           05 filler                   pic x(42)   value spaces.
+      *
+      *budget difference
+       01 ws-total-budget-diff.
+           05 filler                   pic x       value spaces.
+           05 filler                   pic x(27)   value
+                                      "NON-GRAD TOTAL BUDGET DIFF:".
+           05 filler                   pic x(5)    value spaces.
+           05 ws-total-budget          pic zzz,zz9.99
+                                                   value 0.
+           05 filler                   pic x(67)   value spaces.
       *
       *regular math variables
        01 ws-math-store.
@@ -193,6 +195,8 @@
        01 ws-math-totals.
            05 ws-math-prog-total       pic 9(7)v9(4).
            05 ws-math-jrprog-total     pic 9(7)v9(4).
+           05 ws-math-total-diff       pic 9(6)v99.
+           05 ws-math-total-sub        pic 9(6)v99.
       *
       *page specific counters
        01 ws-page-counters.
@@ -272,6 +276,7 @@
       *
       *resets counters to 0 for each page
            move 0 to ws-cntr-prog.
+           move 0 to ws-cntr-jrprog.
            move 0 to ws-cntr-unclass.
       *
        100-print-report-heading.
@@ -312,6 +317,21 @@
            write output-line
              from ws-increase-average-one.
       *
+           write output-line
+             from ws-total-budget-diff
+             after advancing 1 line.
+      *
+
+       160-print-totals.
+      *
+      *print position totals
+           write output-line
+             from ws-class-heading
+             after advancing 1 line.
+           write output-line
+             from ws-class-totals
+             before advancing 2 lines.
+      *
        200-process-pages.
       *
       *processes each page until the counter goes over 10
@@ -321,7 +341,7 @@
              varying ws-global-cntr-line from 1 by 1
              until ws-global-cntr-line > cnst-lines-per-page
              or eof-flag = eof-Y.
-           perform 650-print-totals.
+           perform 160-print-totals.
       *
        250-process-lines.
       *
@@ -350,6 +370,7 @@
            end-if.
            perform 400-calculations.
            move ws-cntr-prog       to ws-prog-total.
+           move ws-cntr-jrprog     to ws-jrprog-total.
            move ws-cntr-unclass    to ws-unclassified-total.
            move il-emp-num         to ws-emp-num.
            move il-emp-name        to ws-emp-name.
@@ -468,27 +489,29 @@
              move ws-math-average to ws-jrprog-average.
       *
        470-calculate-budget-diff.
-      *      
+      *
       *calculates the budget difference
-           if ws-math-new-salary > il-emp-budget-est
-               move "S"    to ws-minus
-           else
-               move spaces to ws-minus
-           end-if.
            subtract ws-math-new-salary
                from il-emp-budget-est
              giving ws-math-budget-diff.
-      *    
-               move ws-math-budget-diff to ws-emp-budget-diff.
-      *      
-       650-print-totals.
       *
-      *print position totals
-           write output-line
-             from ws-class-heading
-             after advancing 1 line.
-           write output-line
-             from ws-class-totals
-             before advancing 2 lines.
+               move ws-math-budget-diff to ws-emp-budget-diff.
+      *
+           if ws-math-new-salary > il-emp-budget-est
+               move "S"    to ws-minus
+               add ws-math-budget-diff
+                to ws-math-total-sub
+           else
+               move spaces to ws-minus
+               add ws-math-budget-diff
+                to ws-math-total-diff
+           end-if.
+      *
+           subtract ws-math-total-sub
+               from ws-math-total-diff
+             giving ws-math-budget-diff.
+      *
+           move ws-math-budget-diff
+             to ws-total-budget.
       *
        end program A5-SalaryReport-5B.
