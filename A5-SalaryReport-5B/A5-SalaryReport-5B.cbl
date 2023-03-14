@@ -9,7 +9,7 @@
        file-control.
       *
            select input-file
-               assign to "../../../../data/A5-SalaryData-NonGrad.dat"
+               assign to "../../../../data/A5-NonGrad.dat"
                organization is line sequential.
       *
            select output-file
