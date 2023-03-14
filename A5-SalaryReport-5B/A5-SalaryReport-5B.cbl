@@ -33,135 +33,152 @@
       *
        fd output-file
            data record is output-line
-           record contains 80 characters.
+           record contains 110 characters.
       *
-       01 output-line                  pic x(80)   value spaces.
+       01 output-line                  pic x(110)   value spaces.
       *
        working-storage section.
       *
       *name line
        01 ws-name-line.
-           05 filler                   pic x(24) value
-                                       "Rob Savoie, Assignment 4".
-           05 filler                   pic x(15) value spaces.
-           05 filler                   pic x(8) value "20220111".
-           05 filler                   pic x(26) value spaces.
-           05 filler                   pic x(7) value "1951043".
+           05 filler                   pic x(24)   value
+                                       "Rob Savoie, Assignment 5".
+           05 filler                   pic x(86)   value spaces.
       *
       *page heading
        01 ws-page-heading.
-           05 filler                   pic x(30) value spaces.
-           05 filler                   pic x(23) value
-                                       "EMPLOYEE SALARY REPORT".
-           05 filler                   pic x(14) value spaces.
-           05 filler                   pic x(4) value "PAGE".
-           05 filler                   pic x value spaces.
+           05 filler                   pic x(33)   value spaces.
+           05 filler                   pic x(35)   value
+                                  "NON-GRADUATE EMPLOYEE SALARY REPORT".
+           05 filler                   pic x(8)    value spaces.
+           05 filler                   pic x(4)    value "PAGE".
+           05 filler                   pic x(11)   value spaces.
            05 ws-page-number           pic z9.
-           05 filler                   pic x(6).
+           05 filler                   pic x(17).
       *
       *top column header
        01 ws-column-head-one.
-           05 filler                   pic x value spaces.
-           05 filler                   pic xxx value "EMP".
-           05 filler                   pic xx value spaces.
-           05 filler                   pic xxx value "EMP".
-           05 filler                   pic x(28) value spaces.
-           05 filler                   pic x(7) value "PRESENT".
-           05 filler                   pic xx value spaces.
-           05 filler                   pic x(8) value "INCREASE".
-           05 filler                   pic x(5) value spaces.
-           05 filler                   pic xxx value "PAY".
-           05 filler                   pic x(11) value spaces.
-           05 filler                   pic xxx value "NEW".
-           05 filler                   pic x(4) value spaces.
+           05 filler                   pic x       value spaces.
+           05 filler                   pic xxx     value "EMP".
+           05 filler                   pic xx      value spaces.
+           05 filler                   pic xxx     value "EMP".
+           05 filler                   pic x(28)   value spaces.
+           05 filler                   pic x(7)    value "PRESENT".
+           05 filler                   pic xx      value spaces.
+           05 filler                   pic x(8)    value "INCREASE".
+           05 filler                   pic x(5)    value spaces.
+           05 filler                   pic xxx     value "PAY".
+           05 filler                   pic x(11)   value spaces.
+           05 filler                   pic xxx     value "NEW".
+           05 filler                   pic x(9)    value spaces.
+           05 filler                   pic x(6)    value "BUDGET".
+           05 filler                   pic x(7)    value spaces.
+           05 filler                   pic x(6)    value "BUDGET".
+           05 filler                   pic x(6)    value spaces.
       *
       *bottom column header
        01 ws-column-head-two.
-           05 filler                   pic x value spaces.
-           05 filler                   pic xxx value "NUM".
-           05 filler                   pic xx value spaces.
-           05 filler                   pic x(4) value "NAME".
-           05 filler                   pic x(10) value spaces.
-           05 filler                   pic x(5) value "YEARS".
-           05 filler                   pic x value spaces.
-           05 filler                   pic x(8) value "POSITION".
-           05 filler                   pic x(4) value spaces.
-           05 filler                   pic x(6) value "SALARY".
-           05 filler                   pic x(5) value spaces.
-           05 filler                   pic x value "%".
-           05 filler                   pic x(7) value spaces.
-           05 filler                   pic x(8) value "INCREASE".
-           05 filler                   pic x(7) value spaces.
-           05 filler                   pic x(6) value "SALARY".
-           05 filler                   pic xx value spaces.
+           05 filler                   pic x       value spaces.
+           05 filler                   pic xxx     value "NUM".
+           05 filler                   pic xx      value spaces.
+           05 filler                   pic x(4)    value "NAME".
+           05 filler                   pic x(10)   value spaces.
+           05 filler                   pic x(5)    value "YEARS".
+           05 filler                   pic x       value spaces.
+           05 filler                   pic x(8)    value "POSITION".
+           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(6)    value "SALARY".
+           05 filler                   pic x(5)    value spaces.
+           05 filler                   pic x       value "%".
+           05 filler                   pic x(7)    value spaces.
+           05 filler                   pic x(8)    value "INCREASE".
+           05 filler                   pic x(7)    value spaces.
+           05 filler                   pic x(6)    value "SALARY".
+           05 filler                   pic x(6)    value spaces.
+           05 filler                   pic x(8)    value "ESTIMATE".
+           05 filler                   pic x(7)    value spaces.
+           05 filler                   pic x(4)    value "DIFF".
+           05 filler                   pic x(7)    value spaces.
       *
       *formatted print detail line
        01 ws-print-line.
-           05 filler                   pic x value spaces.
-           05 ws-emp-num               pic xxx value spaces.
-           05 filler                   pic x value spaces.
-           05 ws-emp-name              pic x(15) value spaces.
-           05 filler                   pic xx value spaces.
-           05 ws-emp-year              pic z9 value 0.
-           05 filler                   pic xx value spaces.
-           05 ws-emp-position          pic x(8) value spaces.
-           05 filler                   pic xx value spaces.
-           05 ws-emp-pres-salary       pic zz,zz9.99 value 0.
-           05 filler                   pic xx value spaces.
-           05 ws-emp-increase-perc     pic x(5) value space.
-           05 filler                   pic xxx value spaces.
-           05 ws-emp-increase-pay      pic $$$,$$9.99 value 0.
-           05 filler                   pic x value spaces.
-           05 ws-emp-new-salary        pic +$z,zzz,zz9.99 value 0.
+           05 filler                   pic x       value spaces.
+           05 ws-emp-num               pic xxx     value spaces.
+           05 filler                   pic x       value spaces.
+           05 ws-emp-name              pic x(15)   value spaces.
+           05 filler                   pic xx      value spaces.
+           05 ws-emp-year              pic z9      value 0.
+           05 filler                   pic xx      value spaces.
+           05 ws-emp-position          pic x(8)    value spaces.
+           05 filler                   pic xx      value spaces.
+           05 ws-emp-pres-salary       pic zz,zz9.99
+                                                   value 0.
+           05 filler                   pic xx      value spaces.
+           05 ws-emp-increase-perc     pic x(5)    value space.
+           05 filler                   pic xxx     value spaces.
+           05 ws-emp-increase-pay      pic $$$,$$9.99
+                                                   value 0.
+           05 filler                   pic x       value spaces.
+           05 ws-emp-new-salary        pic +$z,zzz,zz9.99
+                                                   value 0.
+           05 filler                   pic xx      value spaces.
+           05 ws-emp-budget-est        pic $zzz,zz9.99
+                                                   value 0.
+           05 filler                   pic xx      value spaces.
+           05 ws-emp-budget-diff       pic $$$$,$$9.99
+                                                   value 0.
+           05 filler                   pic x(4)    value spaces.
       *
       *employee class heading
        01 ws-class-heading.
-           05 filler                   pic x value spaces.
-           05 filler                   pic x(15) value
+           05 filler                   pic x       value spaces.
+           05 filler                   pic x(15)   value
                                        "EMPLOYEE CLASS:".
-           05 filler                   pic x(8) value spaces.
-           05 filler                   pic x(7) value "Analyst".
-           05 filler                   pic x(4) value spaces.
-           05 filler                   pic x(8) value "Sen Prog".
-           05 filler                   pic x(4) value spaces.
-           05 filler                   pic x(4) value "Prog".
-           05 filler                   pic x(4) value spaces.
-           05 filler                   pic x(7) value "Jr Prog".
-           05 filler                   pic x(4) value spaces.
-           05 filler                   pic x(12) value "Unclassified".
-           05 filler                   pic x(2) value spaces.
+           05 filler                   pic x(8)    value spaces.
+           05 filler                   pic x(7)    value "Analyst".
+           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(8)    value "Sen Prog".
+           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(4)    value "Prog".
+           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(7)    value "Jr Prog".
+           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(12)   value "Unclassified".
+           05 filler                   pic x(2)    value spaces.
       *
       *employee class totals
        01 ws-class-totals.
-           05 filler                   pic x value spaces.
-           05 filler                   pic x(15) value
+           05 filler                   pic x       value spaces.
+           05 filler                   pic x(15)   value
                                        "# ON THIS PAGE:".
-           05 filler                   pic x(13) value spaces.
-           05 ws-analyst-total         pic z9 value 0.
-           05 filler                   pic x(10) value spaces.
-           05 ws-sen-prog-total        pic z9 value 0.
-           05 filler                   pic x(6) value spaces.
-           05 ws-prog-total            pic z9 value 0.
-           05 filler                   pic x(9) value spaces.
-           05 ws-jrprog-total          pic z9 value 0.
-           05 filler                   pic x(14) value spaces.
-           05 ws-unclassified-total    pic z9 value 0.
-           05 filler                   pic xx value spaces.
+           05 filler                   pic x(13)   value spaces.
+           05 ws-analyst-total         pic z9      value 0.
+           05 filler                   pic x(10)   value spaces.
+           05 ws-sen-prog-total        pic z9      value 0.
+           05 filler                   pic x(6)    value spaces.
+           05 ws-prog-total            pic z9      value 0.
+           05 filler                   pic x(9)    value spaces.
+           05 ws-jrprog-total          pic z9      value 0.
+           05 filler                   pic x(14)   value spaces.
+           05 ws-unclassified-total    pic z9      value 0.
+           05 filler                   pic xx      value spaces.
       *
       *first average line
        01 ws-increase-average-one.
-           05 filler                   pic x value spaces.
-           05 filler                   pic x(18) value
+           05 filler                   pic x       value spaces.
+           05 filler                   pic x(18)   value
                                        "AVERAGE INCREASES:".
-           05 filler                   pic xxx value spaces.
-           05 filler                   pic x(5) value "PROG=".
-           05 filler                   pic x(8) value spaces.
-           05 ws-prog-average          pic z,zz9.99 value 0.
-           05 filler                   pic x(5) value spaces.
-           05 filler                   pic x(8) value "JR PROG=".
-           05 filler                   pic x(4) value spaces.
-           05 ws-jrprog-average        pic z,zz9.99 value 0.
-           05 filler                   pic x(12) value spaces.
+           05 filler                   pic xxx     value spaces.
+           05 filler                   pic x(5)    value "PROG=".
+           05 filler                   pic x(8)    value spaces.
+           05 ws-prog-average          pic z,zz9.99
+                                                   value 0.
+           05 filler                   pic x(5)    value spaces.
+           05 filler                   pic x(8)    value "JR PROG=".
+           05 filler                   pic x(4)    value spaces.
+           05 ws-jrprog-average        pic z,zz9.99
+                                                   value 0.
+           05 filler                   pic x(12)   value spaces.
       *
       *regular math variables
        01 ws-math-store.
@@ -314,28 +331,29 @@
        300-create-output-line.
       *
       *determines if an employee is a graduate
-           if il-emp-years > cnst-nongrad-prog-start then
-               move cnst-prog to ws-emp-position
-               add 1 to ws-cntr-prog
-               add 1 to ws-global-cntr-prog
+           if il-emp-years > cnst-nongrad-prog-start   then
+               move cnst-prog      to ws-emp-position
+               add 1               to ws-cntr-prog
+               add 1               to ws-global-cntr-prog
            end-if
-           if il-emp-years <= cnst-nongrad-prog-start and
-             il-emp-years > cnst-nongrad-jr-start then
-               move cnst-jrprog to ws-emp-position
-               add 1 to ws-cntr-jrprog
-               add 1 to ws-global-cntr-jrprog
+           if il-emp-years <= cnst-nongrad-prog-start  and
+             il-emp-years  > cnst-nongrad-jr-start     then
+               move cnst-jrprog    to ws-emp-position
+               add 1               to ws-cntr-jrprog
+               add 1               to ws-global-cntr-jrprog
            end-if
-           if il-emp-years <= cnst-nongrad-jr-start then
-               move spaces to ws-emp-position
-               add 1 to ws-cntr-unclass
+           if il-emp-years <= cnst-nongrad-jr-start    then
+               move spaces         to ws-emp-position
+               add 1               to ws-cntr-unclass
            end-if.
            perform 400-calculations.
-           move ws-cntr-prog to ws-prog-total.
-           move ws-cntr-unclass to ws-unclassified-total.
-           move il-emp-num to ws-emp-num.
-           move il-emp-name to ws-emp-name.
-           move il-emp-years to ws-emp-year.
-           move il-emp-sal to ws-emp-pres-salary.
+           move ws-cntr-prog       to ws-prog-total.
+           move ws-cntr-unclass    to ws-unclassified-total.
+           move il-emp-num         to ws-emp-num.
+           move il-emp-name        to ws-emp-name.
+           move il-emp-years       to ws-emp-year.
+           move il-emp-sal         to ws-emp-pres-salary.
+           move il-emp-budget-est  to ws-emp-budget-est.
            write output-line
              from ws-print-line
              before advancing 1 line.
@@ -353,29 +371,29 @@
       *calculates pay increase for programmers
       *    creates usable number for multiplication
            divide cnst-math-prog-increase
-             by 100
-             giving ws-math-percent.
+               by 100
+           giving ws-math-percent.
       *
       *    sends percentage string to print line
            if ws-emp-position = cnst-prog then
-               move cnst-prog-increase to ws-emp-increase-perc
+              move cnst-prog-increase   to ws-emp-increase-perc
       *
       *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
-                 by ws-math-percent
+                     by ws-math-percent
                  giving ws-math-increase-pay rounded
       *    adds increase pay to total and moves increase amount
       *    to print line
                add ws-math-increase-pay
-                 to ws-math-prog-total
-               move ws-math-increase-pay to ws-emp-increase-pay
+                to ws-math-prog-total
+              move ws-math-increase-pay to ws-emp-increase-pay
       *
       *    adds increase amount to base salary the moves it
       *    to the print line
                add ws-math-increase-pay
-                 to il-emp-sal
-                 giving ws-math-new-salary
-               move ws-math-new-salary to ws-emp-new-salary
+                to il-emp-sal
+            giving ws-math-new-salary
+              move ws-math-new-salary   to ws-emp-new-salary
            end-if.
       *
        440-calculate-increase-jrprog.
@@ -383,8 +401,8 @@
       *
       *    creates usable number for multiplication
            divide cnst-math-jrprog-increase
-             by 100
-             giving ws-math-percent.
+               by 100
+           giving ws-math-percent.
       *
       *    sends percentage string to print line
            if ws-emp-position = cnst-jrprog then
@@ -392,59 +410,59 @@
       *
       *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
-                 by ws-math-percent
+                     by ws-math-percent
                  giving ws-math-increase-pay rounded
       *    adds increase pay to total and moves increase amount
       *    to print line
                add ws-math-increase-pay
-                 to ws-math-jrprog-total
-               move ws-math-increase-pay to ws-emp-increase-pay
+                to ws-math-jrprog-total
+              move ws-math-increase-pay  to ws-emp-increase-pay
       *
       *    adds increase amount to base salary the moves it
       *    to the print line
                add ws-math-increase-pay
-                 to il-emp-sal
-                 giving ws-math-new-salary
-               move ws-math-new-salary to ws-emp-new-salary
+                to il-emp-sal
+            giving ws-math-new-salary
+              move ws-math-new-salary    to ws-emp-new-salary
            end-if.
       *
        450-calculate-increase-unclass.
       *
       *calculates pay increase for junior programmers
            divide cnst-math-unclass-increase
-             by 100
-             giving ws-math-percent.
+               by 100
+           giving ws-math-percent.
       *
       *    sends percentage string to print line
            if ws-emp-position = " " then
                move cnst-unclass-increase to ws-emp-increase-perc
       *
-               multiply il-emp-sal
       *    multiplies salary by percent to get increase amount
+           multiply il-emp-sal
                  by ws-math-percent
-                 giving ws-math-increase-pay rounded
-               move ws-math-increase-pay to ws-emp-increase-pay
+             giving ws-math-increase-pay rounded
+               move ws-math-increase-pay  to ws-emp-increase-pay
       *
       *    adds increase amount to base salary the moves it
       *    to the print line
                add ws-math-increase-pay
-                 to il-emp-sal
-                 giving ws-math-new-salary
-               move ws-math-new-salary to ws-emp-new-salary
+                to il-emp-sal
+            giving ws-math-new-salary
+              move ws-math-new-salary     to ws-emp-new-salary
            end-if.
       *
        460-calculate-average-increases.
       *
       *calculates average salary increases for each position
            divide ws-math-prog-total
-             by ws-global-cntr-prog
-             giving ws-math-average rounded.
-           move ws-math-average to ws-prog-average.
+               by ws-global-cntr-prog
+           giving ws-math-average rounded.
+             move ws-math-average to ws-prog-average.
       *
            divide ws-math-jrprog-total
-             by ws-global-cntr-jrprog
-             giving ws-math-average rounded.
-           move ws-math-average to ws-jrprog-average.
+               by ws-global-cntr-jrprog
+           giving ws-math-average rounded.
+             move ws-math-average to ws-jrprog-average.
       *
        650-print-totals.
       *
