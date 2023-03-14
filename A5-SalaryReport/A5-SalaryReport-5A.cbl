@@ -183,10 +183,7 @@
            05 ws-prog-average          pic z,zz9.99
                                                    value 0.
            05 filler                   pic x(5)    value spaces.
-           05 filler                   pic x(8)    value "JR PROG=".
-           05 filler                   pic x(4)    value spaces.
-           05 ws-jrprog-average        pic z,zz9.99
-                                                   value 0.
+           05 filler                   pic x(20)   value spaces.
            05 filler                   pic x(12)   value spaces.
       *
       *regular math variables

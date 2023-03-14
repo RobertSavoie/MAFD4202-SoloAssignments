@@ -154,18 +154,6 @@
            05 filler                   pic x(18) value
                                        "AVERAGE INCREASES:".
            05 filler                   pic xxx value spaces.
-           05 filler                   pic x(8) value "ANALYST=".
-           05 filler                   pic x(5) value spaces.
-           05 ws-analyst-average       pic z,zz9.99 value 0.
-           05 filler                   pic x(5) value spaces.
-           05 filler                   pic x(9) value "SEN PROG=".
-           05 filler                   pic xxx value spaces.
-           05 ws-senprog-average       pic z,zz9.99 value 0.
-           05 filler                   pic x(12) value spaces.
-      *
-      *second average line
-       01 ws-increase-average-two.
-           05 filler                   pic x(22) value spaces.
            05 filler                   pic x(5) value "PROG=".
            05 filler                   pic x(8) value spaces.
            05 ws-prog-average          pic z,zz9.99 value 0.
@@ -305,9 +293,6 @@
            write output-line
              from ws-increase-average-one.
       *
-           write output-line
-             from ws-increase-average-two.
-      *
        200-process-pages.
       *
       *processes each page until the counter goes over 10
@@ -359,6 +344,7 @@
       *
       *runs all calculation paragraphs
            perform 430-calculate-increase-prog.
+           perform 440-calculate-increase-jrprog.
            perform 450-calculate-increase-unclass.
            perform 460-calculate-average-increases.
       *
@@ -450,6 +436,11 @@
        460-calculate-average-increases.
       *
       *calculates average salary increases for each position
+           divide ws-math-prog-total
+             by ws-global-cntr-prog
+             giving ws-math-average rounded.
+           move ws-math-average to ws-prog-average.
+      *
            divide ws-math-jrprog-total
              by ws-global-cntr-jrprog
              giving ws-math-average rounded.
