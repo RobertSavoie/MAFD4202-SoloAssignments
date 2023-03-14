@@ -2,10 +2,10 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>c60ff54c-b56b-4da5-888b-91f2e1d29562</ProjectGuid>
-    <OutputName>A5_SalaryReport</OutputName>
+    <ProjectGuid>{3FA42880-BEBB-4F11-9FA5-020FB5CFDEC7}</ProjectGuid>
+    <OutputName>A5_SalaryReport_5B</OutputName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>A5_SalaryReport</RootNamespace>
+    <RootNamespace>A5_SalaryReport_5B</RootNamespace>
     <MFProjectType>Native</MFProjectType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -23,7 +23,7 @@
     <MaxError>100</MaxError>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program1.cbl" />
+    <Compile Include="A5-SalaryReport-5B.cbl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
 </Project>
