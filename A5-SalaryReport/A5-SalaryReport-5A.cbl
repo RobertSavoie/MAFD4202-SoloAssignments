@@ -132,12 +132,13 @@
            05 ws-emp-new-salary        pic +$z,zzz,zz9.99
                                                    value 0.
            05 filler                   pic xx      value spaces.
-           05 ws-emp-budget-est        pic $zzz,zz9.99
+           05 ws-emp-budget-est        pic $$$$,$$9.99
                                                    value 0.
-           05 filler                   pic xx      value spaces.
-           05 ws-emp-budget-diff       pic $$$$,$$9.99
+           05 filler                   pic x       value spaces.
+           05 ws-minus                 pic x       value spaces.
+           05 ws-emp-budget-diff       pic zzz,zz9.99
                                                    value 0.
-           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(5)    value spaces.
       *
       *employee class heading
        01 ws-class-heading.
@@ -207,6 +208,7 @@
            05 ws-math-new-salary       pic 9(9)v99.
            05 ws-math-average          pic 9(9)v99.
            05 ws-math-percent          pic 9v999.
+           05 ws-math-budget-diff      pic 9(6)v99.
       *
       *totals used for math
        01 ws-math-totals.
@@ -419,35 +421,36 @@
            perform 430-calculate-increase-prog.
            perform 450-calculate-increase-unclass.
            perform 460-calculate-average-increases.
+           perform 470-calculate-budget-diff.
       *
        410-calculate-increase-analyst.
       *
       *calculates pay increase for analysts
       *    creates usable number for multiplication
            divide cnst-math-analyst-increase
-             by 100
-             giving ws-math-percent.
+               by 100
+           giving ws-math-percent.
       *
       *    sends percentage string to print line
            if ws-emp-position = cnst-analyst then
-               move cnst-analyst-increase to ws-emp-increase-perc
+               move cnst-analyst-increase  to ws-emp-increase-perc
       *
       *    multiplies salary by percent to get increase amount
-               multiply il-emp-sal
-                 by ws-math-percent
-                 giving ws-math-increase-pay rounded
+         multiply il-emp-sal
+               by ws-math-percent
+           giving ws-math-increase-pay rounded
       *    adds increase pay to total and moves increase amount
       *    to print line
                add ws-math-increase-pay
-                 to ws-math-analyst-total
-               move ws-math-increase-pay to ws-emp-increase-pay
+                to ws-math-analyst-total
+              move ws-math-increase-pay    to ws-emp-increase-pay
       *
       *    adds increase amount to base salary the moves it
       *    to the print line
                add ws-math-increase-pay
-                 to il-emp-sal
-                 giving ws-math-new-salary
-               move ws-math-new-salary to ws-emp-new-salary
+                to il-emp-sal
+            giving ws-math-new-salary
+              move ws-math-new-salary      to ws-emp-new-salary
            end-if.
       *
        420-calculate-increase-senprog.
@@ -460,7 +463,7 @@
       *
       *    sends percentage string to print line
            if ws-emp-position = cnst-senprog then
-               move cnst-senprog-increase to ws-emp-increase-perc
+               move cnst-senprog-increase  to ws-emp-increase-perc
       *
       *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
@@ -470,14 +473,14 @@
       *    to print line
                add ws-math-increase-pay
                  to ws-math-senprog-total
-               move ws-math-increase-pay to ws-emp-increase-pay
+               move ws-math-increase-pay   to ws-emp-increase-pay
       *
       *    adds increase amount to base salary the moves it
       *    to the print line
                add ws-math-increase-pay
                  to il-emp-sal
                  giving ws-math-new-salary
-               move ws-math-new-salary to ws-emp-new-salary
+               move ws-math-new-salary     to ws-emp-new-salary
            end-if.
       *
        430-calculate-increase-prog.
@@ -490,7 +493,7 @@
       *
       *    sends percentage string to print line
            if ws-emp-position = cnst-prog then
-               move cnst-prog-increase to ws-emp-increase-perc
+               move cnst-prog-increase     to ws-emp-increase-perc
       *
       *    multiplies salary by percent to get increase amount
                multiply il-emp-sal
@@ -500,14 +503,14 @@
       *    to print line
                add ws-math-increase-pay
                  to ws-math-prog-total
-               move ws-math-increase-pay to ws-emp-increase-pay
+               move ws-math-increase-pay   to ws-emp-increase-pay
       *
       *    adds increase amount to base salary the moves it
       *    to the print line
                add ws-math-increase-pay
                  to il-emp-sal
                  giving ws-math-new-salary
-               move ws-math-new-salary to ws-emp-new-salary
+               move ws-math-new-salary     to ws-emp-new-salary
            end-if.
       *
        450-calculate-increase-unclass.
@@ -519,39 +522,53 @@
       *
       *    sends percentage string to print line
            if ws-emp-position = " " then
-               move cnst-unclass-increase to ws-emp-increase-perc
+               move cnst-unclass-increase  to ws-emp-increase-perc
       *
                multiply il-emp-sal
       *    multiplies salary by percent to get increase amount
-                 by ws-math-percent
-                 giving ws-math-increase-pay rounded
-               move ws-math-increase-pay to ws-emp-increase-pay
+               by ws-math-percent
+           giving ws-math-increase-pay rounded
+             move ws-math-increase-pay     to ws-emp-increase-pay
       *
       *    adds increase amount to base salary the moves it
       *    to the print line
                add ws-math-increase-pay
-                 to il-emp-sal
-                 giving ws-math-new-salary
-               move ws-math-new-salary to ws-emp-new-salary
+                to il-emp-sal
+            giving ws-math-new-salary
+              move ws-math-new-salary      to ws-emp-new-salary
            end-if.
       *
        460-calculate-average-increases.
       *
       *calculates average salary increases for each position
            divide ws-math-analyst-total
-             by ws-global-cntr-analyst
-             giving ws-math-average rounded.
-           move ws-math-average to ws-analyst-average.
+               by ws-global-cntr-analyst
+           giving ws-math-average rounded.
+             move ws-math-average to ws-analyst-average.
       *
            divide ws-math-senprog-total
-             by ws-global-cntr-senprog
-             giving ws-math-average rounded.
-           move ws-math-average to ws-senprog-average.
+               by ws-global-cntr-senprog
+           giving ws-math-average rounded.
+             move ws-math-average to ws-senprog-average.
       *
            divide ws-math-prog-total
-             by ws-global-cntr-prog
-             giving ws-math-average rounded.
-           move ws-math-average to ws-prog-average.
+               by ws-global-cntr-prog
+           giving ws-math-average rounded.
+             move ws-math-average to ws-prog-average.
+      *
+       470-calculate-budget-diff.
+      *
+      *calculates the budget difference
+           if ws-math-new-salary > il-emp-budget-est
+               move "-"    to ws-minus
+           else
+               move spaces to ws-minus
+           end-if.
+           subtract ws-math-new-salary
+               from il-emp-budget-est
+             giving ws-math-budget-diff.
+      *
+               move ws-math-budget-diff to ws-emp-budget-diff.
       *
        500-create-nongrad-file.
       *

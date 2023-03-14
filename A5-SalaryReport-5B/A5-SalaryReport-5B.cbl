@@ -122,10 +122,11 @@
            05 ws-emp-new-salary        pic +$z,zzz,zz9.99
                                                    value 0.
            05 filler                   pic xx      value spaces.
-           05 ws-emp-budget-est        pic $zzz,zz9.99
+           05 ws-emp-budget-est        pic $$$$,$$9.99
                                                    value 0.
-           05 filler                   pic xx      value spaces.
-           05 ws-emp-budget-diff       pic $$$$,$$9.99
+           05 filler                   pic x       value spaces.
+           05 ws-minus                 pic x       value spaces.
+           05 ws-emp-budget-diff       pic zzz,zz9.99
                                                    value 0.
            05 filler                   pic x(4)    value spaces.
       *
@@ -186,6 +187,7 @@
            05 ws-math-new-salary       pic 9(9)v99.
            05 ws-math-average          pic 9(9)v99.
            05 ws-math-percent          pic 9v999.
+           05 ws-math-budget-diff      pic 9(6)v99.
       *
       *totals used for math
        01 ws-math-totals.
@@ -365,6 +367,7 @@
            perform 440-calculate-increase-jrprog.
            perform 450-calculate-increase-unclass.
            perform 460-calculate-average-increases.
+           perform 470-calculate-budget-diff.
       *
        430-calculate-increase-prog.
       *
@@ -464,6 +467,20 @@
            giving ws-math-average rounded.
              move ws-math-average to ws-jrprog-average.
       *
+       470-calculate-budget-diff.
+      *      
+      *calculates the budget difference
+           if ws-math-new-salary > il-emp-budget-est
+               move "S"    to ws-minus
+           else
+               move spaces to ws-minus
+           end-if.
+           subtract ws-math-new-salary
+               from il-emp-budget-est
+             giving ws-math-budget-diff.
+      *    
+               move ws-math-budget-diff to ws-emp-budget-diff.
+      *      
        650-print-totals.
       *
       *print position totals
