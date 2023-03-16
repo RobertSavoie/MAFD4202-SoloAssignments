@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>47b2ee12-444e-4e32-87e2-a98f9d604439</ProjectGuid>
+    <ProjectGuid>{47B2EE12-444E-4E32-87E2-A98F9D604439}</ProjectGuid>
     <OutputName>A6_DataValidation</OutputName>
     <OutputType>Exe</OutputType>
     <RootNamespace>A6_DataValidation</RootNamespace>
@@ -23,7 +23,7 @@
     <MaxError>100</MaxError>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program1.cbl" />
+    <Compile Include="A6-DataValidation.cbl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
 </Project>

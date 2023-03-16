@@ -124,9 +124,8 @@
            05 filler                   pic xx      value spaces.
            05 ws-emp-budget-est        pic $$$$,$$9.99
                                                    value 0.
-           05 filler                   pic x       value spaces.
-           05 ws-minus                 pic x       value spaces.
-           05 ws-emp-budget-diff       pic zzz,zz9.99
+           05 filler                   pic xx      value spaces.
+           05 ws-emp-budget-diff       pic ---,--9.99
                                                    value 0.
            05 filler                   pic x(5)    value spaces.
       *
@@ -189,14 +188,13 @@
            05 ws-math-new-salary       pic 9(9)v99.
            05 ws-math-average          pic 9(9)v99.
            05 ws-math-percent          pic 9v999.
-           05 ws-math-budget-diff      pic 9(6)v99.
+           05 ws-math-budget-diff      pic S9(6)v99.
       *
       *totals used for math
        01 ws-math-totals.
            05 ws-math-prog-total       pic 9(7)v9(4).
            05 ws-math-jrprog-total     pic 9(7)v9(4).
-           05 ws-math-total-diff       pic 9(6)v99.
-           05 ws-math-total-sub        pic 9(6)v99.
+           05 ws-math-total-diff       pic S9(6)v99.
       *
       *page specific counters
        01 ws-page-counters.
@@ -495,23 +493,12 @@
                from il-emp-budget-est
              giving ws-math-budget-diff.
       *
-               move ws-math-budget-diff to ws-emp-budget-diff.
+           move ws-math-budget-diff to ws-emp-budget-diff.
       *
-           if ws-math-new-salary > il-emp-budget-est
-               move "S"    to ws-minus
-               add ws-math-budget-diff
-                to ws-math-total-sub
-           else
-               move spaces to ws-minus
-               add ws-math-budget-diff
-                to ws-math-total-diff
-           end-if.
+           add ws-math-budget-diff
+            to ws-math-total-diff.
       *
-           subtract ws-math-total-sub
-               from ws-math-total-diff
-             giving ws-math-budget-diff.
-      *
-           move ws-math-budget-diff
+           move ws-math-total-diff
              to ws-total-budget.
       *
        end program A5-SalaryReport-5B.
