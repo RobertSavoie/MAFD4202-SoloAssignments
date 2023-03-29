@@ -1,5 +1,7 @@
        identification division.
        program-id. A6-DataValidation.
+       author. Rob Savoie.
+       date-written. Mar 29/2023
       *
        environment division.
       *
