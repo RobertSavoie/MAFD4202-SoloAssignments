@@ -24,6 +24,8 @@
        01 input-line.
            05 il-prt-mnt-code          pic x.
                88 mnt-code-valid       value "A", "C", "D".
+               88 mnt-code-a           value "A".
+               88 mnt-code-c           value "C".
                88 mnt-code-d           value "D".
       *
            05 il-prt-num               pic 999.
@@ -33,10 +35,10 @@
            05 il-prt-desc              pic x(10).
                88 desc-blank           value " ".
       *
-           05 il-prt-price        pic 99v99.
-               88 price-range       value 1.00 thru 50.00.
+           05 il-prt-price             pic 99v99.
+               88 price-range          value 1.00 thru 50.00.
            05 il-prt-price-text
-           redefines il-prt-price pic x(4).
+           redefines il-prt-price      pic x(4).
       *
            05 il-prt-vend-num          pic 9(6).
                88 il-vend-range        value 1 thru 3.
@@ -106,6 +108,36 @@
            redefines ws-prt-vend-num   pic x(6).
            05 ws-prt-vend-err          pic x(2) value spaces.
       *
+      *total lines
+       01 ws-totals.
+           05 filler                   pic x(22) value spaces.
+           05 filler                   pic x(6) value "TOTALS".
+           05 filler                   pic x(22) value spaces.
+       01 ws-input.
+           05 filler                   pic x(15) value
+                                       "INPUT        - ".
+           05 ws-number-of-records     pic z9.
+       01 ws-good.
+           05 filler                   pic x(15) value
+                                       "GOOD         - ".
+           05 ws-number-of-good        pic z9.
+       01 ws-error.
+           05 filler                   pic x(15) value
+                                       "IN ERROR     - ".
+           05 ws-number-of-error       pic z9.
+       01 ws-good-adds.
+           05 filler                   pic x(15) value
+                                       "GOOD ADDS    - ".
+           05 ws-number-of-adds        pic z9.
+       01 ws-good-changes.
+           05 filler                   pic x(15) value
+                                       "GOOD CHANGES - ".
+           05 ws-number-of-changes     pic z9.
+       01 ws-good-deletes.
+           05 filler                   pic x(15) value
+                                       "GOOD DELETES - ".
+           05 ws-number-of-deletes     pic z9.
+      *
       *error descriptions
        01 ws-error-description-line.
            05 filler                   pic x(10) value spaces.
@@ -117,6 +149,11 @@
        77 eof-Y                        pic x value "y".
        77 eof-N                        pic x value "n".
       *
+      *vendor table
+       01 vend-num-tbl.
+           05 ws-element-one           pic 9 occurs 6 times.
+               88 valid-vend-num       value 1, 2, 3.
+      *
       *counters
        01 ws-counters.
            05 ws-line-counter          pic 99 value 0.
@@ -124,6 +161,12 @@
            05 ws-error-counter         pic 9 value 0.
            05 ws-line-error-counter    pic 999 value 0.
            05 ws-total-error-lines     pic 999 value 0.
+           05 ws-total-records         pic 99 value 0.
+           05 ws-total-error           pic 99 value 0.
+           05 ws-total-good            pic 99 value 0.
+           05 ws-total-good-adds       pic 99 value 0.
+           05 ws-total-good-changes    pic 99 value 0.
+           05 ws-total-good-deletes    pic 99 value 0.
       *
       *constants
        77 lines-per-page               pic 9 value 5.
@@ -150,6 +193,8 @@
       *
            perform 200-process-pages
                until eof-flag = eof-Y.
+      *
+           perform 125-print-footers.
       *
            perform 75-close-files.
       *
@@ -214,32 +259,60 @@
        125-print-footers.
       *print footers
       *
-
+           write output-line
+             from ws-totals
+             after advancing 2 lines.
+      *
+           write output-line
+             from ws-input
+             after advancing 2 lines.
+      *
+           write output-line
+             from ws-good
+             after advancing 2 lines.
+      *
+           write output-line
+             from ws-error
+             after advancing 2 lines.
+      *
+           write output-line
+             from ws-good-adds
+             after advancing 2 lines.
+      *
+           write output-line
+             from ws-good-changes
+             after advancing 2 lines.
+      *
+           write output-line
+             from ws-good-deletes
+             after advancing 2 lines.
       *
        200-process-pages.
       *process pages
       *
            perform 100-print-page-headings.
            perform 250-process-lines
-           until ws-error-counter = lines-per-page
-             or eof-flag = eof-Y.
+             until eof-flag = eof-Y.
       *
        250-process-lines.
       *process lines
       *
            perform 80-clear-artifacts.
-           add 1 to ws-line-counter.
            perform 300-process-invalid-output.
            perform 310-process-error-descriptions.
            perform 50-read-input-file.
       *
        300-process-invalid-output.
       *perform all validations
+           add 1 to ws-line-counter.
+           move ws-line-counter to ws-number-of-records.
       *
       *perform maintenence code validation
            if not mnt-code-valid
                add 1 to ws-error-counter
                move err-indicator to ws-prt-mnt-err
+           else 
+               
            end-if.
       *
       *perform part number validation
@@ -277,22 +350,47 @@
       *
       *perform vendor number validation
            if not mnt-code-d
-
+               move il-prt-vend-num to vend-num-tbl
+               if not valid-vend-num(1)
+                   add 1 to ws-error-counter
+                   move err-indicator to ws-prt-vend-err
+               end-if
            end-if.
       *
       *creates the line to send to output
            if ws-error-counter > 0
-               add 1 to ws-line-error-counter
                add 1 to ws-total-error-lines
+      *
+               move ws-total-error-lines to ws-number-of-error
                move ws-line-counter to ws-record-number
                move il-prt-mnt-code to ws-prt-mnt-code
                move il-prt-num to ws-prt-num
                move il-prt-desc to ws-prt-desc
                move il-prt-price to ws-prt-price
                move il-prt-vend-num to ws-prt-vend-num
+      *
                write output-line
                  from ws-error-line
                  after advancing 1 line
+      *
+           else if mnt-code-a
+               add 1 to ws-total-good-adds
+               move ws-total-good-adds to ws-number-of-adds
+      *
+               add 1 to ws-total-good
+               move ws-total-good to ws-number-of-good
+           else if mnt-code-c
+               add 1 to ws-total-good-changes
+               move ws-total-good-changes to ws-number-of-changes
+      *
+               add 1 to ws-total-good
+               move ws-total-good to ws-number-of-good
+           else if mnt-code-d
+               add 1 to ws-total-good-deletes
+               move ws-total-good-deletes to ws-number-of-deletes
+      *
+               add 1 to ws-total-good
+               move ws-total-good to ws-number-of-good
            end-if.
        310-process-error-descriptions.
       *perform all validations
@@ -344,7 +442,11 @@
       *
       *perform vendor number validation
            if not mnt-code-d
-
+               move il-prt-vend-num to vend-num-tbl
+               if not valid-vend-num(1)
+                   move vend-err to ws-error-description
+                   write output-line from ws-error-description-line
+               end-if
            end-if.
       *
        end program A6-DataValidation.
