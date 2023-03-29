@@ -4,52 +4,62 @@ ROB SAVOIE, ASSIGNMENT 6
 
   Record        --------Raw Data--------  Number             Error Messages
 
-    2      C   040   FRYIN-PAN.<- 0185    100000          NON ALPHA IN DESC
+    2      C   040   FRYIN-PAN.<- 0185   100000          NON ALPHA IN DESC
 
-    3      A   141   WHEELCHAIR   1.25 <- 237912          PRICE IN TROUBLE
+    3      A   141   WHEELCHAIR   1.25<- 237912          PRICE IN TROUBLE
 
-    4      A   042   RING         1130          <-          WRONG VENDOR SERIES
+    4      A   042   RING         1130         <-          WRONG VENDOR SERIES
 
-    7      9<- 060   SINK         9500 <- 777777<-          WRONG MAINT CODE
+    7      9<- 060   SINK         9500<- 777777<-          WRONG MAINT CODE
           PRICE IN TROUBLE
           WRONG VENDOR SERIES
 
-    9      A   030   HANDLE       7500 <- 417610<-          PRICE IN TROUBLE
+    9      A   030   HANDLE       7500<- 417610<-          PRICE IN TROUBLE
           WRONG VENDOR SERIES
+ROB SAVOIE, ASSIGNMENT 6
 
-   10      A   795   IRON           61 <- 211111          PRICE IN TROUBLE
+                   ERROR REPORT
 
-   13      E<- N05<-           <- 9999 <- 999999<-          WRONG MAINT CODE
+  Record        --------Raw Data--------  Number             Error Messages
+
+   10      A   795   IRON           61<- 211111          PRICE IN TROUBLE
+
+   13      E<- N05<-           <- 9999<- 999999<-          WRONG MAINT CODE
           PART NO. NOT NUMERIC
           DESCRIPTION MISSING
           PRICE IN TROUBLE
           WRONG VENDOR SERIES
 
-   14      A   1K7<- ** BILL **<- 0000 <- 000000<-          PART NO. NOT NUMERIC
+   14      A   1K7<- ** BILL **<- 0000<- 000000<-          PART NO. NOT NUMERIC
           NON ALPHA IN DESC
           PRICE IN TROUBLE
           WRONG VENDOR SERIES
 
-   17      C   240   DESK PAD     0049 <-       <-          PRICE IN TROUBLE
+   17      C   240   DESK PAD     0049<-       <-          PRICE IN TROUBLE
           WRONG VENDOR SERIES
 
-   19      C   241   TEMPLATE     5001 <- ABCDEF<-          PRICE IN TROUBLE
+   19      C   241   TEMPLATE     5001<- ABCDEF<-          PRICE IN TROUBLE
           WRONG VENDOR SERIES
+ROB SAVOIE, ASSIGNMENT 6
 
-   20      A   001             <- 4999    166700          DESCRIPTION MISSING
+                   ERROR REPORT
 
-   22       <- 999   CALENDER     0054 <- 174295          WRONG MAINT CODE
+  Record        --------Raw Data--------  Number             Error Messages
+
+   20      A   001             <- 4999   166700          DESCRIPTION MISSING
+
+   22       <- 999   CALENDER     0054<- 174295          WRONG MAINT CODE
           PRICE IN TROUBLE
 
-   29      A      <-           <-   01 <- 999999<-          PART NO. NOT NUMERIC
+   29      A      <-           <-   01<- 999999<-          PART NO. NOT NUMERIC
           DESCRIPTION MISSING
           PRICE IN TROUBLE
           WRONG VENDOR SERIES
 
-   34      A   702   L.H. BENCH<- 4999    376142          NON ALPHA IN DESC
+   34      A   702   L.H. BENCH<- 4999   376142          NON ALPHA IN DESC
 
 
-                      TOTALS
+  TOTALS
 
 INPUT        - 37
 

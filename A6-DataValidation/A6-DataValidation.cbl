@@ -29,21 +29,14 @@
                88 mnt-code-d           value "D".
       *
            05 il-prt-num               pic 999.
-           05 il-prt-num-text
-           redefines il-prt-num        pic xxx.
       *
            05 il-prt-desc              pic x(10).
                88 desc-blank           value " ".
       *
            05 il-prt-price             pic 99v99.
                88 price-range          value 1.00 thru 50.00.
-           05 il-prt-price-text
-           redefines il-prt-price      pic x(4).
       *
            05 il-prt-vend-num          pic 9(6).
-               88 il-vend-range        value 1 thru 3.
-           05 il-prt-vend-txt
-           redefines il-prt-vend-num   pic x(6).
       *
        fd output-file
            data record is output-line
@@ -88,8 +81,6 @@
 
            05 filler                   pic x value spaces.
            05 ws-prt-num               pic 999.
-           05 ws-prt-txt
-           redefines ws-prt-num        pic xxx.
            05 ws-prt-num-err           pic x(2) value space.
 
            05 filler                   pic x value spaces.
@@ -98,21 +89,17 @@
 
            05 filler                   pic x value spaces.
            05 ws-prt-price             pic 99v99.
-           05 ws-prt-price-txt
-           redefines ws-prt-price      pic x(5).
            05 ws-prt-price-err         pic x(2) value spaces.
 
            05 filler                   pic x value spaces.
            05 ws-prt-vend-num          pic 9(6).
-           05 ws-prt-vend-txt
-           redefines ws-prt-vend-num   pic x(6).
            05 ws-prt-vend-err          pic x(2) value spaces.
       *
       *total lines
        01 ws-totals.
-           05 filler                   pic x(22) value spaces.
+           05 filler                   pic x(2) value spaces.
            05 filler                   pic x(6) value "TOTALS".
-           05 filler                   pic x(22) value spaces.
+           05 filler                   pic x(42) value spaces.
        01 ws-input.
            05 filler                   pic x(15) value
                                        "INPUT        - ".
@@ -147,7 +134,6 @@
       *eof constants
        77 eof-flag                     pic x value "n".
        77 eof-Y                        pic x value "y".
-       77 eof-N                        pic x value "n".
       *
       *vendor table
        01 vend-num-tbl.
@@ -159,14 +145,12 @@
            05 ws-line-counter          pic 99 value 0.
            05 ws-page-counter          pic 99 value 0.
            05 ws-error-counter         pic 9 value 0.
-           05 ws-line-error-counter    pic 999 value 0.
            05 ws-total-error-lines     pic 999 value 0.
-           05 ws-total-records         pic 99 value 0.
-           05 ws-total-error           pic 99 value 0.
            05 ws-total-good            pic 99 value 0.
            05 ws-total-good-adds       pic 99 value 0.
            05 ws-total-good-changes    pic 99 value 0.
            05 ws-total-good-deletes    pic 99 value 0.
+           05 ws-page-lines            pic 99 value 0.
       *
       *constants
        77 lines-per-page               pic 9 value 5.
@@ -223,7 +207,9 @@
       *clears output-line
       *
            move spaces to ws-error-line.
+           move spaces to output-line.
            move 0 to ws-error-counter.
+           
       *
       *
        100-print-page-headings.
@@ -231,26 +217,24 @@
       *
            if ws-page-counter > 0
                add 1 to ws-page-counter
-      *        move ws-page-counter to ws-page-number
                write output-line
                  from ws-name-line
                  after advancing page
       *
            else
                add 1 to ws-page-counter
-      *        move ws-page-counter to ws-page-number
                write output-line
                  from ws-name-line
-                 before advancing 1 line
+                 after advancing 0 lines
            end-if.
       *
            write output-line
              from ws-error-report-line
-             after advancing 1 line.
+             after advancing 2 lines.
       *
            write output-line
              from ws-data-heading-line-one
-             after advancing 2 line.
+             after advancing 2 lines.
       *
            write output-line
              from ws-data-heading-line-two
@@ -292,7 +276,9 @@
       *
            perform 100-print-page-headings.
            perform 250-process-lines
-             until eof-flag = eof-Y.
+             until ws-page-lines = lines-per-page
+             or eof-flag = eof-Y.
+           move 0 to ws-page-lines.
       *
        250-process-lines.
       *process lines
@@ -360,6 +346,7 @@
       *creates the line to send to output
            if ws-error-counter > 0
                add 1 to ws-total-error-lines
+               add 1 to ws-page-lines
       *
                move ws-total-error-lines to ws-number-of-error
                move ws-line-counter to ws-record-number
