@@ -156,7 +156,7 @@
            05 ws-page-lines            pic 99      value 0.
       *
       *constants
-       77 lines-per-page               pic 9       value 5.
+       77 lines-per-page               pic 99      value 15.
        77 err-indicator                pic x(2)    value "<-".
        77 mntcode-err                  pic x(19)   value
                                        "WRONG MAINT CODE".
@@ -211,8 +211,6 @@
       *
            move spaces to ws-error-line.
            move spaces to output-line.
-           move 0      to ws-error-counter.
-           
       *
       *
        100-print-page-headings.
@@ -278,17 +276,21 @@
       *process pages
       *
            perform 100-print-page-headings.
-           perform 250-process-lines
-             until ws-page-lines = lines-per-page
+           perform 250-process-error-lines
+             until ws-page-lines > lines-per-page
              or eof-flag = eof-Y.
+           display ws-page-lines.
+           accept return-code.
            move 0 to ws-page-lines.
       *
-       250-process-lines.
+       250-process-error-lines.
       *process lines
       *
            perform 80-clear-artifacts.
            perform 300-process-invalid-output.
-           perform 310-process-error-descriptions.
+           if ws-error-counter > 0
+               perform 310-process-error-descriptions
+           end-if.
            perform 50-read-input-file.
       *
        300-process-invalid-output.
@@ -388,6 +390,7 @@
       *perform maintenence code validation
            if not mnt-code-valid
                add 1                       to ws-error-counter
+               add 1                       to ws-page-lines
                move mntcode-err            to ws-error-description
                write output-line from ws-error-description-line
            end-if.
@@ -396,47 +399,49 @@
            if not mnt-code-d
                if il-prt-num is not numeric
                    add 1                   to ws-error-counter
+                   add 1                   to ws-page-lines
                    move prtnbr-err         to ws-error-description
                    write output-line from ws-error-description-line
                end-if
-           end-if.
       *
       *perform part description validation
-           if not mnt-code-d
                if desc-blank
                    add 1                   to ws-error-counter
+                   add 1                   to ws-page-lines
                    move desc-err-1         to ws-error-description
                    write output-line from ws-error-description-line
                end-if
                if il-prt-desc is not alphabetic
                    add 1                   to ws-error-counter
+                   add 1                   to ws-page-lines
                    move desc-err-2         to ws-error-description
                    write output-line from ws-error-description-line
                end-if
-           end-if.
       *
       *perform unit price validation
-           if not mnt-code-d
                if il-prt-price numeric
                    if not price-range
                        add 1               to ws-error-counter
+                       add 1               to ws-page-lines
                        move price-err      to ws-error-description
                        write output-line from ws-error-description-line
                    end-if
                else
                    add 1                   to ws-error-counter
+                   add 1                   to ws-page-lines
                    move price-err          to ws-error-description
                    write output-line from ws-error-description-line
                end-if
-           end-if.
       *
       *perform vendor number validation
-           if not mnt-code-d
                move il-prt-vend-num        to vend-num-tbl
                if not valid-vend-num(1)
+                   add 1                   to ws-page-lines
                    move vend-err           to ws-error-description
                    write output-line from ws-error-description-line
                end-if
            end-if.
+      *
+           move 0 to ws-error-counter.
       *
        end program A6-DataValidation.

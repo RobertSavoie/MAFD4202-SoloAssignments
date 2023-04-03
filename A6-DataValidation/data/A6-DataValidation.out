@@ -16,11 +16,6 @@ ROB SAVOIE, ASSIGNMENT 6
 
     9      A   030   HANDLE       7500<- 417610<-          PRICE IN TROUBLE
           WRONG VENDOR SERIES
-ROB SAVOIE, ASSIGNMENT 6
-
-                   ERROR REPORT
-
-  Record        --------Raw Data--------  Number             Error Messages
 
    10      A   795   IRON           61<- 211111          PRICE IN TROUBLE
 
@@ -29,6 +24,11 @@ ROB SAVOIE, ASSIGNMENT 6
           DESCRIPTION MISSING
           PRICE IN TROUBLE
           WRONG VENDOR SERIES
+ROB SAVOIE, ASSIGNMENT 6
+
+                   ERROR REPORT
+
+  Record        --------Raw Data--------  Number             Error Messages
 
    14      A   1K7<- ** BILL **<- 0000<- 000000<-          PART NO. NOT NUMERIC
           NON ALPHA IN DESC
@@ -40,16 +40,16 @@ ROB SAVOIE, ASSIGNMENT 6
 
    19      C   241   TEMPLATE     5001<- ABCDEF<-          PRICE IN TROUBLE
           WRONG VENDOR SERIES
-ROB SAVOIE, ASSIGNMENT 6
-
-                   ERROR REPORT
-
-  Record        --------Raw Data--------  Number             Error Messages
 
    20      A   001             <- 4999   166700          DESCRIPTION MISSING
 
    22       <- 999   CALENDER     0054<- 174295          WRONG MAINT CODE
           PRICE IN TROUBLE
+ROB SAVOIE, ASSIGNMENT 6
+
+                   ERROR REPORT
+
+  Record        --------Raw Data--------  Number             Error Messages
 
    29      A      <-           <-   01<- 999999<-          PART NO. NOT NUMERIC
           DESCRIPTION MISSING
