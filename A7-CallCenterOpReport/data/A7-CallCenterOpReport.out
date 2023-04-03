@@ -1,0 +1,33 @@
+
+         Y o u r   N a m e                            lab 7     230403    15190269
+                                        call centre volumes for july - june
+
+  operator  operator      jul    aug    sep    oct    nov    dec    jan    feb    mar    apr    may    jun    total    avg    rem
+     #        name
+    A12      JOHN               0
+    A14      ANNE               0
+    B10      ADAM               0
+    B12      JOANNE             0
+    B13      LEE                0
+    B14      MARGARET           0
+    B35      NOAH               0
+    C09      SAM                0
+    C11      JOHNNY             0
+    C13      HELEN              0
+    C17      DOMINIC            0
+    C19      GERRY              0
+    C21      EARL               0
+    C22      AMANDA             0
+    C23      GEORGE             0
+    C25      MELISSA            0
+    C27      JIM                0
+    D10      THEO               0
+    D25      KIMMIE             0
+    E14      MARK               0
+    E52      JEREMY             0
+
+      number of operators with no calls:     0
+
+      number of months with no calls:
+
+      overall total calls:                   0
