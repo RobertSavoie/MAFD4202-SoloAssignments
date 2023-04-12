@@ -53,6 +53,8 @@
            05 ws-emp-total             pic 9(5)    value 0.
            05 ws-total-no-calls        pic 9(5)    value 0.
            05 ws-total-zero-mnths      pic 9(5)    value 0.
+           05 ws-total-rem             pic 999     value 0.
+           05 ws-total-average         pic 9(4)    value 0.
       *
        01 ws-counter.
            05 cntr-index               pic 99      value 1.
@@ -75,10 +77,10 @@
            05 filler                   pic x(5)
                value spaces.
            05 filler                   pic x(25)
-               value '    Y o u r   N a m e    '.
+               value '       Rob Savoie       '.
       *               ----+----1----+----2----+
            05 filler                   pic x(29)
-               value '                        lab 7'.
+               value '                        Lab 7'.
       *               ----+----1----+----2----+----
            05 filler                   pic x(5)
                value spaces.
@@ -93,7 +95,7 @@
            05 filler                   pic x(40)
                value spaces.
            05 filler                   pic x(40)
-               value 'call centre volumes for july - june     '.
+               value 'Call Centre Volumes For July - June     '.
       *               ----+----1----+----2----+----3----+----4
            05 filler                   pic x(40)
                value spaces.
@@ -102,46 +104,46 @@
       *
        01 ws-heading-line1.
            05 filler                   pic x(2)    value spaces.
-           05 filler                   pic x(8)    value 'operator'.
+           05 filler                   pic x(8)    value 'Operator'.
            05 filler                   pic x(2)    value spaces.
-           05 filler                   pic x(8)    value 'operator'.
+           05 filler                   pic x(8)    value 'Operator'.
            05 filler                   pic x(6)    value spaces.
-           05 filler                   pic x(3)    value 'jul'.
+           05 filler                   pic x(3)    value 'Jul'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'aug'.
+           05 filler                   pic x(3)    value 'Aug'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'sep'.
+           05 filler                   pic x(3)    value 'Sep'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'oct'.
+           05 filler                   pic x(3)    value 'Oct'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'nov'.
+           05 filler                   pic x(3)    value 'Nov'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'dec'.
+           05 filler                   pic x(3)    value 'Dec'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'jan'.
+           05 filler                   pic x(3)    value 'Jan'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'feb'.
+           05 filler                   pic x(3)    value 'Feb'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'mar'.
+           05 filler                   pic x(3)    value 'Mar'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'apr'.
+           05 filler                   pic x(3)    value 'Apr'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'may'.
+           05 filler                   pic x(3)    value 'May'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(3)    value 'jun'.
+           05 filler                   pic x(3)    value 'Jun'.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(5)    value 'total'.
-           05 filler                   pic x(6)    value spaces.
-           05 filler                   pic x(3)    value 'avg'.
+           05 filler                   pic x(5)    value 'Total'.
+           05 filler                   pic x(4)    value spaces.
+           05 filler                   pic x(3)    value 'Avg'.
            05 filler                   pic x(2)    value spaces.
-           05 filler                   pic x(3)    value 'rem'.
+           05 filler                   pic x(3)    value 'Rem'.
            05 filler                   pic x(3)    value spaces.
       *
        01 ws-heading-line2.
            05 filler                   pic x(5)    value spaces.
            05 filler                   pic x(1)    value '#'.
            05 filler                   pic x(8)    value spaces.
-           05 filler                   pic x(4)    value 'name'.
+           05 filler                   pic x(4)    value 'Name'.
            05 filler                   pic x(114) 
                value spaces.
       *
@@ -179,13 +181,13 @@
            05 ws-detail-line-jun       pic zz9.
            05 filler                   pic x(4).
            05 ws-detail-line-total     pic zzzz9.
-           05 filler                   pic x(4) 
+           05 filler                   pic x(2) 
                value spaces.
            05 ws-detail-line-avg       pic zzzz9.
            05 filler                   pic x(4) 
                value spaces.
            05 ws-detail-line-rem       pic 9.
-           05 filler                   pic x(3)    value spaces.
+           05 filler                   pic x(5)    value spaces.
 
       *
        01 ws-footer1.
@@ -216,10 +218,11 @@
            05 ws-operator-may          pic z9.
            05 filler                   pic x(5).
            05 ws-operator-jun          pic z9.
+           05 filler                   pic x(26).
       *
        01 ws-footer2.
            05 filler                   pic x(4)    value spaces.
-           05 filler                   pic x(7)   value "Totals:".
+           05 filler                   pic x(7)    value "Totals:".
            05 filler                   pic x(14).
            05 ws-total-call-jul        pic zzz9.
            05 filler                   pic x(3).
@@ -244,12 +247,13 @@
            05 ws-total-call-may        pic zzz9.
            05 filler                   pic x(3).
            05 ws-total-call-jun        pic zzz9.
-           05 filler                   pic x(3).
+           05 filler                   pic x(4).
            05 ws-grand-totals          pic zzzz9.
            05 filler                   pic x(3)    value spaces.
            05 ws-grand-avg             pic zzz9.
-           05 filler                   pic x(3)    value spaces.
-           05 ws-grand-rem             pic 999.
+           05 filler                   pic x(2)    value spaces.
+           05 ws-grand-rem             pic zz9.
+           05 filler                   pic x(5).
       *
        01 ws-footer3.
            05 filler                   pic x(4)    value spaces.
@@ -277,35 +281,36 @@
            05 ws-average-may           pic zz9.
            05 filler                   pic x(4).
            05 ws-average-jun           pic zz9.
+           05 filler                   pic x(26).
       *
        01 ws-total-line1.
            05 filler                   pic x(4) 
                value spaces.
            05 filler                   pic x(35)
-               value "number of operators with no calls: ".
+               value "Number of Operators With No Calls: ".
       *               ----+----1----+----2----+----3----+
            05 ws-total-line-no-calls   pic zzzz9.
-           05 filler                   pic x(86) 
+           05 filler                   pic x(88) 
                value spaces.
       *
        01 ws-total-line2.
            05 filler                   pic x(4) 
                value spaces.
            05 filler                   pic x(35)
-               value "number of months with no calls:    ".
+               value "Number of Months With No Calls:    ".
       *               ----+----1----+----2----+----3----+
            05 ws-total-line-zero-mths  pic zzzz9.
-           05 filler                   pic x(86) 
+           05 filler                   pic x(88) 
                value spaces.
       *
        01 ws-total-line3.
            05 filler                   pic x(4) 
                value spaces.
            05 filler                   pic x(35)
-               value "overall total calls:               ".
+               value "Overall Total Calls:               ".
       *               ----+----1----+----2----+----3----+
            05 ws-total-line-calls      pic zzzz9.
-           05 filler                   pic x(86) 
+           05 filler                   pic x(88) 
                value spaces.
       *
        procedure division.
@@ -377,7 +382,10 @@
                by cntr-average-calc
            giving ws-average rounded
            remainder ws-rem.
-
+      *
+           add ws-average               to ws-total-average.
+           add ws-rem                   to ws-total-rem.
+      *
            perform 360-calculate-table-average
              varying cntr-index from 1 by 1
              until cntr-index > ws-number-of-months.
@@ -431,9 +439,11 @@
                        to ws-emp-total.
       *
        360-calculate-table-average.
+      *
            divide total-mnth-calls(cntr-index)
                by cntr-mnth-ops(cntr-index)
            giving average-mnth-calls(cntr-index).
+      *
        400-print-totals.
       * Move required data to total lines for output
       *
@@ -462,6 +472,9 @@
            move total-mnth-calls(10)    to ws-total-call-apr.
            move total-mnth-calls(11)    to ws-total-call-may.
            move total-mnth-calls(12)    to ws-total-call-jun.
+           move ws-grand-total          to ws-grand-totals.
+           move ws-total-average        to ws-grand-avg.
+           move ws-total-rem            to ws-grand-rem.
 
            move average-mnth-calls(1)   to ws-average-jul.
            move average-mnth-calls(2)   to ws-average-aug.
