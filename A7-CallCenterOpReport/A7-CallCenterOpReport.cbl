@@ -69,9 +69,19 @@
            05 average-mnth-calls       pic 9(4)    occurs 12 times
                                                    value 0.
       *
+       01 month-tbl.
+           05 months                   pic xxx     occurs 12 times
+                         value "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+                               "Jan", "Feb", "Mar", "Apr", "May", "Jun".
+      *
        01 ws-math.
            05 ws-average               pic 9(5)    value 0.
            05 ws-rem                   pic 9       value 0.
+           05 ws-high-avg-calc         pic 9(5)    value 0.
+           05 ws-low-avg-calc          pic 9(5)    value 99999.
+           05 ws-avg-month-calc        pic 9(5)    value 0.
+      *
+       77 ws-no-calls                  pic x(5)    value " ZERO".
       *
        01 ws-name-line.
            05 filler                   pic x(5)
@@ -181,6 +191,9 @@
            05 ws-detail-line-jun       pic zz9.
            05 filler                   pic x(4).
            05 ws-detail-line-total     pic zzzz9.
+           05 ws-detail-line-total-text
+           redefines ws-detail-line-total
+                                       pic x(5).
            05 filler                   pic x(2) 
                value spaces.
            05 ws-detail-line-avg       pic zzzz9.
@@ -313,6 +326,36 @@
            05 filler                   pic x(88) 
                value spaces.
       *
+       01 ws-total-line4.
+           05 filler                   pic x(4) value spaces.
+           05 filler                   pic x(35) value
+                     "Highest Avg Calls:                 ".
+      *               ----+----1----+----2----+----3----+
+           05 ws-high-op-id            pic x(3).
+           05 filler                   pic x.
+           05 ws-high-avg-calls        pic zzzz9.
+           05 filler                   pic x(84) value spaces.
+      *
+       01 ws-total-line5.
+           05 filler                   pic x(4) value spaces.
+           05 filler                   pic x(35) value
+                     "Lowest Avg Calls:                  ".
+      *               ----+----1----+----2----+----3----+
+           05 ws-low-op-id             pic x(3).
+           05 filler                   pic x.
+           05 ws-low-avg-calls         pic zzzz9.
+           05 filler                   pic x(84) value spaces.
+      *
+       01 ws-total-line6.
+           05 filler                   pic x(4) value spaces.
+           05 filler                   pic x(35) value
+                     "Highest Avg Month:                 ".
+      *               ----+----1----+----2----+----3----+
+           05 ws-avg-month-name        pic x(3).
+           05 filler                   pic xxx.
+           05 ws-high-avg-month        pic zz9.
+           05 filler                   pic x(84) value spaces.
+      *
        procedure division.
       *
        000-main.
@@ -376,6 +419,9 @@
       *       as outlined in the requirments
            if ws-emp-total = 0
                add 1 to ws-total-no-calls
+               move ws-no-calls to ws-detail-line-total-text
+           else if ws-emp-total > 0
+               move ws-emp-total        to ws-detail-line-total
            end-if.
 
            divide ws-emp-total
@@ -385,6 +431,17 @@
       *
            add ws-average               to ws-total-average.
            add ws-rem                   to ws-total-rem.
+
+           if ws-average > ws-high-avg-calc
+               move ws-average          to ws-high-avg-calc
+               move ws-high-avg-calc    to ws-high-avg-calls
+               move emp-rec-num         to ws-high-op-id
+           end-if.
+           if ws-average < ws-low-avg-calc
+               move ws-average          to ws-low-avg-calc
+               move ws-low-avg-calc     to ws-low-avg-calls
+               move emp-rec-num         to ws-low-op-id
+           end-if.
       *
            perform 360-calculate-table-average
              varying cntr-index from 1 by 1
@@ -404,7 +461,6 @@
            move emp-rec-calls-month(10) to ws-detail-line-apr.
            move emp-rec-calls-month(11) to ws-detail-line-may.
            move emp-rec-calls-month(12) to ws-detail-line-jun.
-           move ws-emp-total            to ws-detail-line-total.
            move ws-average              to ws-detail-line-avg.
            move ws-rem                  to ws-detail-line-rem.
            move ws-total-no-calls       to ws-total-line-no-calls.
@@ -417,6 +473,7 @@
            move 0                       to ws-emp-total.
            move 0                       to ws-average.
            move 0                       to ws-rem.
+           move 0                       to cntr-zero-mnths.
       *
       * read next record (if any)
            perform 200-read-input-file.
@@ -426,7 +483,7 @@
                add 1   to cntr-zero-mnths
                add 1   to ws-total-zero-mnths
            else if emp-rec-calls-month(cntr-index) > 0
-               add 1 to cntr-mnth-ops(cntr-index)
+               add 1   to cntr-mnth-ops(cntr-index)
                add 1   to cntr-average-calc
            end-if
            end-if.
@@ -442,7 +499,17 @@
       *
            divide total-mnth-calls(cntr-index)
                by cntr-mnth-ops(cntr-index)
-           giving average-mnth-calls(cntr-index).
+           giving average-mnth-calls(cntr-index) rounded.
+
+           if cntr-index > 1
+               if average-mnth-calls(cntr-index) >
+                 average-mnth-calls(cntr-index - 1)
+                   move average-mnth-calls(cntr-index) to 
+                   ws-high-avg-month
+                   move months(cntr-index)             to 
+                   ws-avg-month-name
+               end-if
+           end-if.
       *
        400-print-totals.
       * Move required data to total lines for output
@@ -459,7 +526,7 @@
            move cntr-mnth-ops(10)       to ws-operator-apr.
            move cntr-mnth-ops(11)       to ws-operator-may.
            move cntr-mnth-ops(12)       to ws-operator-jun.
-
+      *
            move total-mnth-calls(1)     to ws-total-call-jul.
            move total-mnth-calls(2)     to ws-total-call-aug.
            move total-mnth-calls(3)     to ws-total-call-sep.
@@ -475,7 +542,7 @@
            move ws-grand-total          to ws-grand-totals.
            move ws-total-average        to ws-grand-avg.
            move ws-total-rem            to ws-grand-rem.
-
+      *
            move average-mnth-calls(1)   to ws-average-jul.
            move average-mnth-calls(2)   to ws-average-aug.
            move average-mnth-calls(3)   to ws-average-sep.
@@ -488,7 +555,7 @@
            move average-mnth-calls(10)  to ws-average-apr.
            move average-mnth-calls(11)  to ws-average-may.
            move average-mnth-calls(12)  to ws-average-jun.
-
+      *
            move ws-total-zero-mnths     to ws-total-line-zero-mths.
            move ws-total-no-calls       to ws-total-line-no-calls.
            move ws-grand-total          to ws-total-line-calls.
@@ -505,6 +572,12 @@
            write report-line from ws-total-line2
                after advancing 2 lines.
            write report-line from ws-total-line3
+               after advancing 2 lines.
+           write report-line from ws-total-line4
+               after advancing 2 lines.
+           write report-line from ws-total-line5
+               after advancing 2 lines.
+           write report-line from ws-total-line6
                after advancing 2 lines.
       *
        end program A7-CallCenterOpReport.
