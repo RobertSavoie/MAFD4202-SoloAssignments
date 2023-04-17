@@ -131,8 +131,4 @@
            read in-file 
            	   at end move 'y' to ws-eof-flag.
       *
-       200-error-check.
-      *
-
-      *
 	   end program T2-02-P1.
