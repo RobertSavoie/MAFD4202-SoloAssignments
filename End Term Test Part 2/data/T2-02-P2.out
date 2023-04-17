@@ -1,0 +1,21 @@
+
+    name                       old       calculated    actual        new
+                               comm         incr        incr         comm
+
+     Ben                       44,000       4,400       4,400       48,400
+
+     Sue                       42,000      11,361      11,361       53,361
+
+     Walter                    80,000      35,720           0       80,000    COMMISSION ADJUSTED
+
+     Roy                       55,000      14,878      14,878       69,878
+
+     Liz                       50,000       5,000       5,000       55,000
+
+     Phil                      47,000       4,700       4,700       51,700
+
+     Libby                     67,000      18,124      13,000       85,124    COMMISSION ADJUSTED
+
+ total calculated increase amount    =    $94,183
+
+ total actual increase amount        =    $53,339

@@ -2,7 +2,7 @@
        program-id. T2-02-P1. 
        author. Rob Savoie.
        date-written. April 17/2023.
-      *Program Description:
+      *Program Description: Does error checking for input file
       *
        environment division.
        input-output section.

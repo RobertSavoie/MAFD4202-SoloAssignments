@@ -23,6 +23,8 @@ Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "A7-CallCenterOpReport", "A7
 EndProject
 Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "End Term Test", "End Term Test\End Term Test.cblproj", "{E9DF7ACA-192D-49C0-9370-49455FC68C6E}"
 EndProject
+Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "End Term Test Part 2", "End Term Test Part 2\End Term Test Part 2.cblproj", "{C465F248-61A2-42C0-9B2D-918113960FEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -69,6 +71,10 @@ Global
 		{E9DF7ACA-192D-49C0-9370-49455FC68C6E}.Debug|x86.Build.0 = Debug|x86
 		{E9DF7ACA-192D-49C0-9370-49455FC68C6E}.Release|x86.ActiveCfg = Release|x86
 		{E9DF7ACA-192D-49C0-9370-49455FC68C6E}.Release|x86.Build.0 = Release|x86
+		{C465F248-61A2-42C0-9B2D-918113960FEB}.Debug|x86.ActiveCfg = Debug|x86
+		{C465F248-61A2-42C0-9B2D-918113960FEB}.Debug|x86.Build.0 = Debug|x86
+		{C465F248-61A2-42C0-9B2D-918113960FEB}.Release|x86.ActiveCfg = Release|x86
+		{C465F248-61A2-42C0-9B2D-918113960FEB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
