@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>e9df7aca-192d-49c0-9370-49455fc68c6e</ProjectGuid>
+    <ProjectGuid>{E9DF7ACA-192D-49C0-9370-49455FC68C6E}</ProjectGuid>
     <OutputName>End_Term_Test</OutputName>
     <OutputType>Exe</OutputType>
     <RootNamespace>End_Term_Test</RootNamespace>
@@ -23,7 +23,8 @@
     <MaxError>100</MaxError>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program1.cbl" />
+    <Compile Include="T2-02-P1.cbl" />
+    <Compile Include="T2-02-P2.cbl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
 </Project>

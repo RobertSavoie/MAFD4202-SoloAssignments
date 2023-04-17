@@ -1,7 +1,7 @@
        identification division.
        program-id. T2-02-P2.  
-       author. Name.
-       date-written. date.
+       author. Rob Savoie.
+       date-written. April 17/2023.
       *Program Description:
       *
        environment division.
@@ -45,6 +45,9 @@
        working-storage section.
       *
        01 ws-eof-flag                  pic x     value "N".
+       01 ws-math.
+           05 ws-total-incr-amount-adj pic 9.
+           05 ws-total-incr-amount-calc pic 9.
       *
        01 ws-detail-output.
            05 filler                   pic x(5).
